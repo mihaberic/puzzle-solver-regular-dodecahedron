@@ -2,12 +2,10 @@
 Creating a tool that solves the puzzle I have. It is similar to a rubik's cube, but instead of a cube it is a "regular dodecahedron"
 
 
-## How to build app:
+## How to run app:
 - install typescript globally and run `tsc -watch`
-
-
+- open the index.html file
 
 ## References:
-- https://www.w3schools.com/graphics/svg_polyline.asp
-- https://en.wikipedia.org/wiki/Regular_dodecahedron
-- https://www.w3schools.com/graphics/svg_transformations.asp - when style rotate was not working
+- [Svg element that I used](https://www.w3schools.com/graphics/svg_polyline.asp)
+- [How I chose the naming](https://en.wikipedia.org/wiki/Regular_dodecahedron)
