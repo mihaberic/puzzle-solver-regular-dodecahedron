@@ -1,3 +1,5 @@
+import { PentagonSide, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
+
 const SIDE_LENGTH = 50
 const ORIGIN_X = 150
 const ORIGIN_Y = 150
@@ -32,57 +34,87 @@ const ROTATION_STEP = 36
  * - the following points are specified clock wise.
  */
 export class SvgPentagonsHelper {
-    public populateSvgWithPentagons() {
-        this.createPentagon(ORIGIN_X, ORIGIN_Y, 0)
-        
+    private puzzleToy?: RegularDodecahedronPuzzle
+    public populateSvgWithPentagons(puzzleToy: RegularDodecahedronPuzzle) {
+        this.puzzleToy = puzzleToy
+
         /** distance between neighboring centers */
         const centerDistance = (SIDE_LENGTH / 2) * tan(54) * 2
-        this.createPentagon(ORIGIN_X, ORIGIN_Y - centerDistance, ROTATION_STEP * 5) // A
-        this.createPentagon(ORIGIN_X + centerDistance * cos(18), ORIGIN_Y - centerDistance * sin(18), ROTATION_STEP * 3) // B
-        this.createPentagon(ORIGIN_X + centerDistance * cos(54), ORIGIN_Y + centerDistance * sin(54), ROTATION_STEP * 7) // C
-        this.createPentagon(ORIGIN_X - centerDistance * cos(54), ORIGIN_Y + centerDistance * sin(54), ROTATION_STEP * 3) // D
-        this.createPentagon(ORIGIN_X - centerDistance * cos(18), ORIGIN_Y - centerDistance * sin(18), ROTATION_STEP * 7) // E
+
+        this.createPentagon(ORIGIN_X, ORIGIN_Y, 0, puzzleToy.getPentagonSide(1))
+        this.createPentagon(ORIGIN_X, ORIGIN_Y - centerDistance, ROTATION_STEP * 5, puzzleToy.getPentagonSide(2))
+        this.createPentagon(
+            ORIGIN_X + centerDistance * cos(18),
+            ORIGIN_Y - centerDistance * sin(18),
+            ROTATION_STEP * 3,
+            puzzleToy.getPentagonSide(3)
+        ) // B
+        this.createPentagon(
+            ORIGIN_X + centerDistance * cos(54),
+            ORIGIN_Y + centerDistance * sin(54),
+            ROTATION_STEP * 7,
+            puzzleToy.getPentagonSide(4)
+        ) // C
+        this.createPentagon(
+            ORIGIN_X - centerDistance * cos(54),
+            ORIGIN_Y + centerDistance * sin(54),
+            ROTATION_STEP * 3,
+            puzzleToy.getPentagonSide(5)
+        ) // D
+        this.createPentagon(
+            ORIGIN_X - centerDistance * cos(18),
+            ORIGIN_Y - centerDistance * sin(18),
+            ROTATION_STEP * 7,
+            puzzleToy.getPentagonSide(6)
+        ) // E
 
         // Second Flower
         this.createPentagon(
             ORIGIN_X + centerDistance * cos(54),
             ORIGIN_Y + centerDistance * (sin(54) + 1),
-            ROTATION_STEP * 4
+            ROTATION_STEP * 4,
+            puzzleToy.getPentagonSide(7)
         )
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 3),
             ORIGIN_Y + centerDistance * (sin(54) + 1),
-            ROTATION_STEP * 2
+            ROTATION_STEP * 2,
+            puzzleToy.getPentagonSide(8)
         )
         this.createPentagon(
             ORIGIN_X + centerDistance * cos(54) * 2,
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 1),
-            ROTATION_STEP * 9
+            ROTATION_STEP * 9,
+            puzzleToy.getPentagonSide(9)
         )
 
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 2 - cos(18)),
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 1 + sin(18)),
-            ROTATION_STEP * 6
+            ROTATION_STEP * 6,
+            puzzleToy.getPentagonSide(10)
         )
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 2 + cos(18)),
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 1 + sin(18)),
-            ROTATION_STEP * 6
+            ROTATION_STEP * 6,
+            puzzleToy.getPentagonSide(11)
         )
 
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 2),
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 2),
-            ROTATION_STEP * 2
+            ROTATION_STEP * 2,
+            puzzleToy.getPentagonSide(0)
         )
     }
 
     /** Creates pentagon with 4 parts */
-    private createPentagon(centerX: number, centerY: number, rotateDegrees: number = 0) {
+    private createPentagon(centerX: number, centerY: number, rotateDegrees: number = 0, pentagonSide: PentagonSide) {
         if (rotateDegrees > 360) {
             throw new Error('Do not rotate by more than 360')
         }
+
         const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
         polygon.setAttribute('points', this.createPathForPentagon(centerX, centerY))
 
@@ -100,10 +132,46 @@ export class SvgPentagonsHelper {
         }
 
         svg.append(polygon) // TODO: remove this and do the appending outside
-        svg.append(this.createBigQuarter(centerX, centerY, rotateDegrees))
-        svg.append(this.createSmallQuarter(centerX, centerY, rotateDegrees))
-        svg.append(this.createMediumLeftQuarter(centerX, centerY, rotateDegrees))
-        svg.append(this.createMediumRightQuarter(centerX, centerY, rotateDegrees))
+
+        const parts: SVGPolygonElement[] = []
+        parts.push(this.createBigQuarter(centerX, centerY, rotateDegrees))
+        parts.push(this.createMediumLeftQuarter(centerX, centerY, rotateDegrees))
+        parts.push(this.createMediumRightQuarter(centerX, centerY, rotateDegrees))
+        parts.push(this.createSmallQuarter(centerX, centerY, rotateDegrees))
+
+        parts[0].style.fill = pentagonSide.big
+        parts[1].style.fill = pentagonSide.mediumLeft
+        parts[2].style.fill = pentagonSide.mediumRight
+        parts[3].style.fill = pentagonSide.small
+
+        parts[0].onclick = () => {
+            pentagonSide.big = this.getColorFromColorPicker()
+            parts[0].style.fill = this.getColorFromColorPicker()
+            console.log(this.puzzleToy)
+        }
+
+        parts[1].onclick = () => {
+            pentagonSide.mediumLeft = this.getColorFromColorPicker()
+            parts[1].style.fill = this.getColorFromColorPicker()
+            console.log(this.puzzleToy)
+        }
+
+        parts[2].onclick = () => {
+            pentagonSide.mediumRight = this.getColorFromColorPicker()
+            parts[2].style.fill = this.getColorFromColorPicker()
+            console.log(this.puzzleToy)
+        }
+
+        parts[3].onclick = () => {
+            pentagonSide.small = this.getColorFromColorPicker()
+            parts[3].style.fill = this.getColorFromColorPicker()
+            console.log(this.puzzleToy)
+        }
+
+        parts.forEach((part) => {
+            part.onmouseenter = () => svg.append(part)
+            svg.append(part)
+        })
         return polygon
     }
 
@@ -136,7 +204,7 @@ export class SvgPentagonsHelper {
         polygon.setAttribute('points', this.createPathForBigQuarter(centerX, centerY))
         polygon.style.transform = 'rotate(' + rotateDegrees + 'deg)'
         polygon.style.transformOrigin = `${centerX}px ${centerY}px`
-        polygon.style.fill = '#ff000099'
+        polygon.style.fill = '#ff0000'
         polygon.style.stroke = 'black'
         polygon.style.strokeWidth = '1px'
 
@@ -172,7 +240,7 @@ export class SvgPentagonsHelper {
         polygon.setAttribute('points', this.createPathForQuarterSmall(centerX, centerY))
         polygon.style.transform = 'rotate(' + rotateDegrees + 'deg)'
         polygon.style.transformOrigin = `${centerX}px ${centerY}px`
-        polygon.style.fill = '#00ff0099'
+        polygon.style.fill = '#00ff00'
         polygon.style.stroke = 'black'
         polygon.style.strokeWidth = '1px'
 
@@ -207,7 +275,7 @@ export class SvgPentagonsHelper {
         polygon.setAttribute('points', this.createPathForQuarterMediumLeft(centerX, centerY))
         polygon.style.transform = 'rotate(' + rotateDegrees + 'deg)'
         polygon.style.transformOrigin = `${centerX}px ${centerY}px`
-        polygon.style.fill = '#1100ff99'
+        polygon.style.fill = '#1100ff'
         polygon.style.stroke = 'black'
         polygon.style.strokeWidth = '1px'
 
@@ -233,7 +301,6 @@ export class SvgPentagonsHelper {
             .join(' ')
     }
 
-
     /**
      * Creates the small division of the pentagon.
      * - The `centerX` and `centerY` refer to the center of the containing pentagon.
@@ -243,7 +310,7 @@ export class SvgPentagonsHelper {
         polygon.setAttribute('points', this.createPathForQuarterMediumRight(centerX, centerY))
         polygon.style.transform = 'rotate(' + rotateDegrees + 'deg)'
         polygon.style.transformOrigin = `${centerX}px ${centerY}px`
-        polygon.style.fill = '#ffb10099'
+        polygon.style.fill = '#ffb100'
         polygon.style.stroke = 'black'
         polygon.style.strokeWidth = '1px'
 
@@ -267,6 +334,11 @@ export class SvgPentagonsHelper {
                 return xString + ',' + yString
             })
             .join(' ')
+    }
+
+    /** TODO: create ColorPicker class and use it to get color. */
+    private getColorFromColorPicker() {
+        return (window as any)['selectedColor']
     }
 }
 

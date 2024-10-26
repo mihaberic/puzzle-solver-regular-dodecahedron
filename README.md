@@ -9,6 +9,8 @@ Creating a tool that solves the puzzle I have. It is similar to a rubik's cube, 
 
 ## Images
 ![Parts](./assets/two-flowers-with-4-part-pentagons.svg)
+Actual current state of my toy:
+![My actual toy](./assets/state-of-my-actual-toy.svg)
 
 
 ## References:

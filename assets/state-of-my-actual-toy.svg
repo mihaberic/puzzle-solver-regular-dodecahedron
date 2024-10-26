@@ -1,0 +1,602 @@
+<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+    <polygon
+        points="125.00,115.59 175.00,115.59 190.45,163.14 150.00,192.53 109.55,163.14"
+        style="
+            transform: rotate(0deg);
+            transform-origin: 150px 150px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="125.00,115.59 175.00,115.59 182.73,139.37 150.00,163.14 117.27,139.37"
+        style="
+            transform: rotate(0deg);
+            transform-origin: 150px 150px;
+            fill: rgb(255, 255, 255);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="117.27,139.37 150.00,163.14 129.77,177.84 109.55,163.14"
+        style="
+            transform: rotate(0deg);
+            transform-origin: 150px 150px;
+            fill: rgb(255, 0, 0);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="182.73,139.37 190.45,163.14 170.23,177.84 150.00,163.14"
+        style="
+            transform: rotate(0deg);
+            transform-origin: 150px 150px;
+            fill: rgb(233, 114, 114);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="150.00,163.14 170.23,177.84 150.00,192.53 129.77,177.84"
+        style="
+            transform: rotate(0deg);
+            transform-origin: 150px 150px;
+            fill: rgb(233, 114, 114);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="125.00,46.77 175.00,46.77 190.45,94.32 150.00,123.71 109.55,94.32"
+        style="
+            transform: rotate(180deg);
+            transform-origin: 150px 81.1809px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="125.00,46.77 175.00,46.77 182.73,70.55 150.00,94.32 117.27,70.55"
+        style="
+            transform: rotate(180deg);
+            transform-origin: 150px 81.1809px;
+            fill: rgb(0, 255, 221);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="117.27,70.55 150.00,94.32 129.77,109.02 109.55,94.32"
+        style="
+            transform: rotate(180deg);
+            transform-origin: 150px 81.1809px;
+            fill: rgb(0, 255, 0);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="182.73,70.55 190.45,94.32 170.23,109.02 150.00,94.32"
+        style="
+            transform: rotate(180deg);
+            transform-origin: 150px 81.1809px;
+            fill: rgb(100, 232, 184);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="150.00,94.32 170.23,109.02 150.00,123.71 129.77,109.02"
+        style="
+            transform: rotate(180deg);
+            transform-origin: 150px 81.1809px;
+            fill: rgb(255, 255, 255);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="190.45,94.32 240.45,94.32 255.90,141.88 215.45,171.27 175.00,141.88"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 215.451px 128.734px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="190.45,94.32 240.45,94.32 248.18,118.10 215.45,141.88 182.73,118.10"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 215.451px 128.734px;
+            fill: rgb(100, 232, 184);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="182.73,118.10 215.45,141.88 195.23,156.57 175.00,141.88"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 215.451px 128.734px;
+            fill: rgb(239, 243, 15);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="248.18,118.10 255.90,141.88 235.68,156.57 215.45,141.88"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 215.451px 128.734px;
+            fill: rgb(255, 192, 192);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="215.45,141.88 235.68,156.57 215.45,171.27 195.23,156.57"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 215.451px 128.734px;
+            fill: rgb(98, 21, 100);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="165.45,171.27 215.45,171.27 230.90,218.82 190.45,248.21 150.00,218.82"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 190.451px 205.676px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="165.45,171.27 215.45,171.27 223.18,195.04 190.45,218.82 157.73,195.04"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 190.451px 205.676px;
+            fill: rgb(42, 59, 171);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="157.73,195.04 190.45,218.82 170.23,233.51 150.00,218.82"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 190.451px 205.676px;
+            fill: rgb(216, 162, 14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="223.18,195.04 230.90,218.82 210.68,233.51 190.45,218.82"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 190.451px 205.676px;
+            fill: rgb(42, 59, 171);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="190.45,218.82 210.68,233.51 190.45,248.21 170.23,233.51"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 190.451px 205.676px;
+            fill: rgb(239, 243, 15);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="84.55,171.27 134.55,171.27 150.00,218.82 109.55,248.21 69.10,218.82"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 109.549px 205.676px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="84.55,171.27 134.55,171.27 142.27,195.04 109.55,218.82 76.82,195.04"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 109.549px 205.676px;
+            fill: rgb(239, 243, 15);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="76.82,195.04 109.55,218.82 89.32,233.51 69.10,218.82"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 109.549px 205.676px;
+            fill: rgb(42, 59, 171);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="142.27,195.04 150.00,218.82 129.77,233.51 109.55,218.82"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 109.549px 205.676px;
+            fill: rgb(28, 98, 28);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="109.55,218.82 129.77,233.51 109.55,248.21 89.32,233.51"
+        style="
+            transform: rotate(108deg);
+            transform-origin: 109.549px 205.676px;
+            fill: rgb(28, 98, 28);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="59.55,94.32 109.55,94.32 125.00,141.88 84.55,171.27 44.10,141.88"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 84.5492px 128.734px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="59.55,94.32 109.55,94.32 117.27,118.10 84.55,141.88 51.82,118.10"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 84.5492px 128.734px;
+            fill: rgb(255, 0, 0);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="51.82,118.10 84.55,141.88 64.32,156.57 44.10,141.88"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 84.5492px 128.734px;
+            fill: rgb(28, 98, 28);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="117.27,118.10 125.00,141.88 104.77,156.57 84.55,141.88"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 84.5492px 128.734px;
+            fill: rgb(239, 243, 15);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="84.55,141.88 104.77,156.57 84.55,171.27 64.32,156.57"
+        style="
+            transform: rotate(252deg);
+            transform-origin: 84.5492px 128.734px;
+            fill: rgb(216, 162, 14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="165.45,240.09 215.45,240.09 230.90,287.64 190.45,317.03 150.00,287.64"
+        style="
+            transform: rotate(144deg);
+            transform-origin: 190.451px 274.495px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="165.45,240.09 215.45,240.09 223.18,263.86 190.45,287.64 157.73,263.86"
+        style="
+            transform: rotate(144deg);
+            transform-origin: 190.451px 274.495px;
+            fill: rgb(216, 162, 14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="157.73,263.86 190.45,287.64 170.23,302.33 150.00,287.64"
+        style="
+            transform: rotate(144deg);
+            transform-origin: 190.451px 274.495px;
+            fill: rgb(255, 192, 192);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="223.18,263.86 230.90,287.64 210.68,302.33 190.45,287.64"
+        style="
+            transform: rotate(144deg);
+            transform-origin: 190.451px 274.495px;
+            fill: rgb(255, 255, 255);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="190.45,287.64 210.68,302.33 190.45,317.03 170.23,302.33"
+        style="
+            transform: rotate(144deg);
+            transform-origin: 190.451px 274.495px;
+            fill: rgb(255, 0, 0);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="246.35,240.09 296.35,240.09 311.80,287.64 271.35,317.03 230.90,287.64"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 271.353px 274.495px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="246.35,240.09 296.35,240.09 304.08,263.86 271.35,287.64 238.63,263.86"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 271.353px 274.495px;
+            fill: rgb(0, 255, 0);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="238.63,263.86 271.35,287.64 251.13,302.33 230.90,287.64"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 271.353px 274.495px;
+            fill: rgb(255, 255, 255);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="304.08,263.86 311.80,287.64 291.58,302.33 271.35,287.64"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 271.353px 274.495px;
+            fill: rgb(216, 162, 14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="271.35,287.64 291.58,302.33 271.35,317.03 251.13,302.33"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 271.353px 274.495px;
+            fill: rgb(255, 192, 192);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="205.90,295.76 255.90,295.76 271.35,343.31 230.90,372.70 190.45,343.31"
+        style="
+            transform: rotate(324deg);
+            transform-origin: 230.902px 330.171px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="205.90,295.76 255.90,295.76 263.63,319.54 230.90,343.31 198.18,319.54"
+        style="
+            transform: rotate(324deg);
+            transform-origin: 230.902px 330.171px;
+            fill: rgb(233, 114, 114);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="198.18,319.54 230.90,343.31 210.68,358.01 190.45,343.31"
+        style="
+            transform: rotate(324deg);
+            transform-origin: 230.902px 330.171px;
+            fill: rgb(98, 21, 100);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="263.63,319.54 271.35,343.31 251.13,358.01 230.90,343.31"
+        style="
+            transform: rotate(324deg);
+            transform-origin: 230.902px 330.171px;
+            fill: rgb(0, 255, 221);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="230.90,343.31 251.13,358.01 230.90,372.70 210.68,358.01"
+        style="
+            transform: rotate(324deg);
+            transform-origin: 230.902px 330.171px;
+            fill: rgb(42, 59, 171);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="140.45,317.03 190.45,317.03 205.90,364.58 165.45,393.97 125.00,364.58"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 165.451px 351.437px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="140.45,317.03 190.45,317.03 198.18,340.80 165.45,364.58 132.73,340.80"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 165.451px 351.437px;
+            fill: rgb(98, 21, 100);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="132.73,340.80 165.45,364.58 145.23,379.27 125.00,364.58"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 165.451px 351.437px;
+            fill: rgb(100, 232, 184);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="198.18,340.80 205.90,364.58 185.68,379.27 165.45,364.58"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 165.451px 351.437px;
+            fill: rgb(98, 21, 100);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="165.45,364.58 185.68,379.27 165.45,393.97 145.23,379.27"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 165.451px 351.437px;
+            fill: rgb(0, 255, 0);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="271.35,317.03 321.35,317.03 336.80,364.58 296.35,393.97 255.90,364.58"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 296.353px 351.437px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="271.35,317.03 321.35,317.03 329.08,340.80 296.35,364.58 263.63,340.80"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 296.353px 351.437px;
+            fill: rgb(255, 192, 192);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="263.63,340.80 296.35,364.58 276.13,379.27 255.90,364.58"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 296.353px 351.437px;
+            fill: rgb(233, 114, 114);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="329.08,340.80 336.80,364.58 316.58,379.27 296.35,364.58"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 296.353px 351.437px;
+            fill: rgb(0, 255, 0);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="296.35,364.58 316.58,379.27 296.35,393.97 276.13,379.27"
+        style="
+            transform: rotate(216deg);
+            transform-origin: 296.353px 351.437px;
+            fill: rgb(0, 255, 221);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="205.90,364.58 255.90,364.58 271.35,412.13 230.90,441.52 190.45,412.13"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 230.902px 398.99px;
+            fill: rgba(0, 0, 255, 0.14);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="205.90,364.58 255.90,364.58 263.63,388.36 230.90,412.13 198.18,388.36"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 230.902px 398.99px;
+            fill: rgb(28, 98, 28);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="198.18,388.36 230.90,412.13 210.68,426.83 190.45,412.13"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 230.902px 398.99px;
+            fill: rgb(0, 255, 221);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="263.63,388.36 271.35,412.13 251.13,426.83 230.90,412.13"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 230.902px 398.99px;
+            fill: rgb(255, 0, 0);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+    <polygon
+        points="230.90,412.13 251.13,426.83 230.90,441.52 210.68,426.83"
+        style="
+            transform: rotate(72deg);
+            transform-origin: 230.902px 398.99px;
+            fill: rgb(100, 232, 184);
+            stroke: black;
+            stroke-width: 1px;
+        "
+    ></polygon>
+</svg>
