@@ -43,6 +43,8 @@ export class RegularDodecahedronPuzzle {
             })
         })
         this.stateOfPentagons = currentStateOfMyActualPuzzleToy as any
+
+        console.log('isStatePossible', this.isStatePossible())
     }
 
     /** TODO: instead of index, support more human understandable concept as well. */
@@ -56,9 +58,46 @@ export class RegularDodecahedronPuzzle {
 
     /**
      * Check the number of times each color appears and make sure it is in all 4 places.
+     * TODO: make this more useful by making it log out the problematic part.
      */
     public isStatePossible() {
-        throw new Error('not implemented') // TODO: implement
+        const allColors = Object.entries(Color).map((entry) => entry[1])
+        const colors = new Map(
+            allColors.map((color) => {
+                return [color, { big: false, mediumLeft: false, mediumRight: false, small: false }]
+            })
+        )
+
+        for (const item of this.stateOfPentagons) {
+            if (colors.get(item.big)?.big) {
+                return false
+            }
+
+            colors.get(item.big)!.big = true
+
+            if (colors.get(item.mediumLeft)?.mediumLeft) {
+                return false
+            }
+
+            colors.get(item.mediumLeft)!.mediumLeft = true
+
+            if (colors.get(item.mediumRight)?.mediumRight) {
+                return false
+            }
+
+            colors.get(item.mediumRight)!.mediumRight = true
+
+            if (colors.get(item.small)?.small) {
+                return false
+            }
+
+            colors.get(item.small)!.small = true
+        }
+
+        return Array.from(colors.values())
+            .map((item) => Object.values(item))
+            .flat()
+            .every((item) => item)
     }
 }
 
