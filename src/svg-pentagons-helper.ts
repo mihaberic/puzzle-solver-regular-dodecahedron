@@ -93,11 +93,17 @@ export class SvgPentagonsHelper {
         polygon.style.stroke = 'black'
         polygon.style.strokeWidth = '1px'
 
-        document.querySelector('svg')?.append(polygon) // TODO: remove this and do the appending outside
-        document.querySelector('svg')?.append(this.createBigQuarter(centerX, centerY, rotateDegrees))
-        document.querySelector('svg')?.append(this.createSmallQuarter(centerX, centerY, rotateDegrees))
-        document.querySelector('svg')?.append(this.createMediumLeftQuarter(centerX, centerY, rotateDegrees))
-        document.querySelector('svg')?.append(this.createMediumRightQuarter(centerX, centerY, rotateDegrees))
+        const svg = document.querySelector('svg')
+
+        if (!svg) {
+            throw new Error('No svg element found')
+        }
+
+        svg.append(polygon) // TODO: remove this and do the appending outside
+        svg.append(this.createBigQuarter(centerX, centerY, rotateDegrees))
+        svg.append(this.createSmallQuarter(centerX, centerY, rotateDegrees))
+        svg.append(this.createMediumLeftQuarter(centerX, centerY, rotateDegrees))
+        svg.append(this.createMediumRightQuarter(centerX, centerY, rotateDegrees))
         return polygon
     }
 
