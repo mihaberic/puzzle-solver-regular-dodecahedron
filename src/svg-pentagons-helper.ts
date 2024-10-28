@@ -1,3 +1,5 @@
+// TODO: figure out why I need to add `.js` for imports to work in browser
+import { ColorPicker } from './color-picker.js'
 import { PentagonSide, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
 
 const SIDE_LENGTH = 50
@@ -336,9 +338,9 @@ export class SvgPentagonsHelper {
             .join(' ')
     }
 
-    /** TODO: create ColorPicker class and use it to get color. */
     private getColorFromColorPicker() {
-        return (window as any)['selectedColor']
+        const color = ColorPicker.getCurrentColor()
+        return color as any
     }
 }
 
