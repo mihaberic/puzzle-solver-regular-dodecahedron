@@ -1,6 +1,6 @@
 // TODO: figure out why I need to add `.js` for imports to work in browser
 import { ColorPicker } from './color-picker.js'
-import { PentagonSide, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
+import { PentagonFace, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
 
 const SIDE_LENGTH = 50
 const ORIGIN_X = 150
@@ -43,76 +43,75 @@ export class SvgPentagonsHelper {
         /** distance between neighboring centers */
         const centerDistance = (SIDE_LENGTH / 2) * tan(54) * 2
 
-        this.createPentagon(ORIGIN_X, ORIGIN_Y, 0, puzzleToy.getPentagonSide(1))
-        this.createPentagon(ORIGIN_X, ORIGIN_Y - centerDistance, ROTATION_STEP * 5, puzzleToy.getPentagonSide(2))
-        this.createPentagon(
-            ORIGIN_X + centerDistance * cos(18),
-            ORIGIN_Y - centerDistance * sin(18),
-            ROTATION_STEP * 3,
-            puzzleToy.getPentagonSide(3)
-        ) // B
-        this.createPentagon(
-            ORIGIN_X + centerDistance * cos(54),
-            ORIGIN_Y + centerDistance * sin(54),
-            ROTATION_STEP * 7,
-            puzzleToy.getPentagonSide(4)
-        ) // C
-        this.createPentagon(
-            ORIGIN_X - centerDistance * cos(54),
-            ORIGIN_Y + centerDistance * sin(54),
-            ROTATION_STEP * 3,
-            puzzleToy.getPentagonSide(5)
-        ) // D
+        this.createPentagon(ORIGIN_X, ORIGIN_Y - centerDistance, ROTATION_STEP * 5, puzzleToy.getFace('A'))
         this.createPentagon(
             ORIGIN_X - centerDistance * cos(18),
             ORIGIN_Y - centerDistance * sin(18),
             ROTATION_STEP * 7,
-            puzzleToy.getPentagonSide(6)
-        ) // E
-
+            puzzleToy.getFace('B')
+        )
+        this.createPentagon(
+            ORIGIN_X + centerDistance * cos(18),
+            ORIGIN_Y - centerDistance * sin(18),
+            ROTATION_STEP * 3,
+            puzzleToy.getFace('C')
+        )
+        this.createPentagon(ORIGIN_X, ORIGIN_Y, 0, puzzleToy.getFace('D'))
+        this.createPentagon(
+            ORIGIN_X - centerDistance * cos(54),
+            ORIGIN_Y + centerDistance * sin(54),
+            ROTATION_STEP * 3,
+            puzzleToy.getFace('E')
+        )
+        this.createPentagon(
+            ORIGIN_X + centerDistance * cos(54),
+            ORIGIN_Y + centerDistance * sin(54),
+            ROTATION_STEP * 7,
+            puzzleToy.getFace('F')
+        )
+        
         // Second Flower
         this.createPentagon(
             ORIGIN_X + centerDistance * cos(54),
             ORIGIN_Y + centerDistance * (sin(54) + 1),
             ROTATION_STEP * 4,
-            puzzleToy.getPentagonSide(7)
+            puzzleToy.getFace('G')
         )
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 3),
             ORIGIN_Y + centerDistance * (sin(54) + 1),
             ROTATION_STEP * 2,
-            puzzleToy.getPentagonSide(8)
+            puzzleToy.getFace('H')
         )
         this.createPentagon(
             ORIGIN_X + centerDistance * cos(54) * 2,
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 1),
             ROTATION_STEP * 9,
-            puzzleToy.getPentagonSide(9)
+            puzzleToy.getFace('I')
         )
-
+        
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 2 - cos(18)),
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 1 + sin(18)),
             ROTATION_STEP * 6,
-            puzzleToy.getPentagonSide(10)
+            puzzleToy.getFace('J')
         )
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 2 + cos(18)),
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 1 + sin(18)),
             ROTATION_STEP * 6,
-            puzzleToy.getPentagonSide(11)
+            puzzleToy.getFace('K')
         )
-
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 2),
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 2),
             ROTATION_STEP * 2,
-            puzzleToy.getPentagonSide(0)
+            puzzleToy.getFace('L')
         )
     }
 
     /** Creates pentagon with 4 parts */
-    private createPentagon(centerX: number, centerY: number, rotateDegrees: number = 0, pentagonSide: PentagonSide) {
+    private createPentagon(centerX: number, centerY: number, rotateDegrees: number = 0, pentagonSide: PentagonFace) {
         if (rotateDegrees > 360) {
             throw new Error('Do not rotate by more than 360')
         }
@@ -147,30 +146,35 @@ export class SvgPentagonsHelper {
         parts[3].style.fill = pentagonSide.small
 
         parts[0].onclick = () => {
-            pentagonSide.big = this.getColorFromColorPicker()
-            parts[0].style.fill = this.getColorFromColorPicker()
+            const color = this.getColorFromColorPicker()
+            this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, big: color})
+            parts[0].style.fill = color
             console.log(this.puzzleToy)
         }
 
         parts[1].onclick = () => {
-            pentagonSide.mediumLeft = this.getColorFromColorPicker()
-            parts[1].style.fill = this.getColorFromColorPicker()
+            const color = this.getColorFromColorPicker()
+            this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, mediumLeft: color})
+            parts[1].style.fill = color
             console.log(this.puzzleToy)
         }
 
         parts[2].onclick = () => {
-            pentagonSide.mediumRight = this.getColorFromColorPicker()
-            parts[2].style.fill = this.getColorFromColorPicker()
+            const color = this.getColorFromColorPicker()
+            this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, mediumRight: color})
+            parts[2].style.fill = color
             console.log(this.puzzleToy)
         }
 
         parts[3].onclick = () => {
-            pentagonSide.small = this.getColorFromColorPicker()
-            parts[3].style.fill = this.getColorFromColorPicker()
+            const color = this.getColorFromColorPicker()
+            this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, small: color})
+            parts[3].style.fill = color
             console.log(this.puzzleToy)
         }
 
         parts.forEach((part) => {
+            // This makes sure that when scale is increased on hovered element, that it is always displayed on top
             part.onmouseenter = () => svg.append(part)
             svg.append(part)
         })
