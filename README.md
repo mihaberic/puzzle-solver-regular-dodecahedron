@@ -16,3 +16,8 @@ Actual current state of my toy:
 ## References:
 - [Svg element that I used](https://www.w3schools.com/graphics/svg_polyline.asp)
 - [How I chose the naming](https://en.wikipedia.org/wiki/Regular_dodecahedron)
+
+## Naming:
+- face - the flat surface 12 of which this shape has
+- crease - the part where the toy moves. 4 of which this has
+- regular dodecahedron - the shape of this toy
