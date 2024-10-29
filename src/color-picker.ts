@@ -28,13 +28,13 @@ export class ColorPicker {
             btn.onclick = () => {
                 console.log('Selected color: %c' + colorHex, 'color:' + colorHex)
                 this.currentColor = colorHex // TODO: do not use window to store state like this.
-                this.selectButton(btn)
+                this.markOptionAsSelected(btn)
             }
 
             return btn
         })
 
-        this.selectButton(buttons[0])
+        this.markOptionAsSelected(buttons[0])
 
         // TODO: do this some other way maybe:
         document.querySelector('.color-picker')?.append(...buttons)
@@ -45,7 +45,7 @@ export class ColorPicker {
         return this.currentColor // Change this to color
     }
 
-    private static selectButton(btn: HTMLButtonElement) {
+    private static markOptionAsSelected(btn: HTMLButtonElement) {
         this.selectedColorButton?.classList.remove('active-color')
         btn.classList.add('active-color')
         this.selectedColorButton = btn

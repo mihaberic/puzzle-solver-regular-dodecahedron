@@ -18,6 +18,7 @@ Actual current state of my toy:
 - [How I chose the naming](https://en.wikipedia.org/wiki/Regular_dodecahedron)
 
 ## Naming:
-- face - the flat surface 12 of which this shape has
-- crease - the part where the toy moves. 4 of which this has
 - regular dodecahedron - the shape of this toy
+- crease - the part where the toy moves. 4 of which this has
+- face - the flat surface 12 of which this shape has
+  - collateral face - a face that stays the same but moves to new location after rotating a specific crease.

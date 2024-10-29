@@ -36,6 +36,8 @@ export class RegularDodecahedronPuzzle {
     /** Pentagons are sorted from top to bottom, left to right. */
     private stateOfPentagons: PentagonFace[] = []
 
+    private stateChangeCallbacks: Record<string, (face: PentagonFace) => void> = {}
+
     constructor() {
         Object.entries(Color).forEach((entry, index) => {
             this.stateOfPentagons.push({
@@ -68,10 +70,19 @@ export class RegularDodecahedronPuzzle {
 
         const face = this.stateOfPentagons.find(item => item.faceId == options.faceId)!
         Object.assign(face, options)
+        this.stateChangeCallbacks[options.faceId]?.(face)
     }
 
     public getFullState() {
         return this.stateOfPentagons
+    }
+
+    /**
+     * To simplify implementation. Only one registered listener is supported per faceName.
+     * - If same faceName is provided again, only the newest callback for it will be used.
+     */
+    public listenForColorChanges(faceName: string, callback: (face: PentagonFace) => void) {
+        this.stateChangeCallbacks[faceName] = callback
     }
 
     /**
@@ -126,85 +137,85 @@ const currentStateOfMyActualPuzzleToy = [
     {
         faceId: 'A',
         big: '#00ffdd',
-        mediumLeft: '#00ff00',
-        mediumRight: '#64e8b8',
+        mediumLeft: '#64e8b8',
+        mediumRight: '#00ff00',
         small: '#ffffff',
     },
     {
         faceId: 'B',
         big: '#ff0000',
-        mediumLeft: '#1c621c',
-        mediumRight: '#eff30f',
+        mediumLeft: '#eff30f',
+        mediumRight: '#1c621c',
         small: '#d8a20e',
     },
     {
         faceId: 'C',
         big: '#64e8b8',
-        mediumLeft: '#eff30f',
-        mediumRight: '#ffc0c0',
+        mediumLeft: '#ffc0c0',
+        mediumRight: '#eff30f',
         small: '#621564',
     },
     {
         faceId: 'D',
         big: '#ffffff',
-        mediumLeft: '#ff0000',
-        mediumRight: '#e97272',
+        mediumLeft: '#e97272',
+        mediumRight: '#ff0000',
         small: '#e97272',
     },
     {
         faceId: 'E',
         big: '#eff30f',
-        mediumLeft: '#2a3bab',
-        mediumRight: '#1c621c',
+        mediumLeft: '#1c621c',
+        mediumRight: '#2a3bab',
         small: '#1c621c',
     },
     {
         faceId: 'F',
         big: '#2a3bab',
-        mediumLeft: '#d8a20e',
-        mediumRight: '#2a3bab',
+        mediumLeft: '#2a3bab',
+        mediumRight: '#d8a20e',
         small: '#eff30f',
     },
     {
         faceId: 'G',
         big: '#d8a20e',
-        mediumLeft: '#ffc0c0',
-        mediumRight: '#ffffff',
+        mediumLeft: '#ffffff',
+        mediumRight: '#ffc0c0',
         small: '#ff0000',
     },
     {
         faceId: 'H',
         big: '#00ff00',
-        mediumLeft: '#ffffff',
-        mediumRight: '#d8a20e',
+        mediumLeft: '#d8a20e',
+        mediumRight: '#ffffff',
         small: '#ffc0c0',
     },
     {
         faceId: 'I',
         big: '#e97272',
-        mediumLeft: '#621564',
-        mediumRight: '#00ffdd',
+        mediumLeft: '#00ffdd',
+        mediumRight: '#621564',
         small: '#2a3bab',
     },
     {
         faceId: 'J',
         big: '#621564',
-        mediumLeft: '#64e8b8',
-        mediumRight: '#621564',
+        mediumLeft: '#621564',
+        mediumRight: '#64e8b8',
         small: '#00ff00',
     },
     {
         faceId: 'K',
         big: '#ffc0c0',
-        mediumLeft: '#e97272',
-        mediumRight: '#00ff00',
+        mediumLeft: '#00ff00',
+        mediumRight: '#e97272',
         small: '#00ffdd',
     },
     {
         faceId: 'L',
         big: '#1c621c',
-        mediumLeft: '#00ffdd',
-        mediumRight: '#ff0000',
+        mediumLeft: '#ff0000',
+        mediumRight: '#00ffdd',
         small: '#64e8b8',
     },
 ]

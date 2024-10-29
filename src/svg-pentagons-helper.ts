@@ -140,36 +140,37 @@ export class SvgPentagonsHelper {
         parts.push(this.createMediumRightQuarter(centerX, centerY, rotateDegrees))
         parts.push(this.createSmallQuarter(centerX, centerY, rotateDegrees))
 
-        parts[0].style.fill = pentagonSide.big
-        parts[1].style.fill = pentagonSide.mediumLeft
-        parts[2].style.fill = pentagonSide.mediumRight
-        parts[3].style.fill = pentagonSide.small
+        const setColorsOfParts = (face: PentagonFace) => {
+            parts[0].style.fill = face.big
+            parts[1].style.fill = face.mediumLeft
+            parts[2].style.fill = face.mediumRight
+            parts[3].style.fill = face.small
+        }
+
+        setColorsOfParts(pentagonSide)
+        this.puzzleToy?.listenForColorChanges(pentagonSide.faceId, setColorsOfParts)
 
         parts[0].onclick = () => {
             const color = this.getColorFromColorPicker()
             this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, big: color})
-            parts[0].style.fill = color
             console.log(this.puzzleToy)
         }
 
         parts[1].onclick = () => {
             const color = this.getColorFromColorPicker()
             this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, mediumLeft: color})
-            parts[1].style.fill = color
             console.log(this.puzzleToy)
         }
 
         parts[2].onclick = () => {
             const color = this.getColorFromColorPicker()
             this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, mediumRight: color})
-            parts[2].style.fill = color
             console.log(this.puzzleToy)
         }
 
         parts[3].onclick = () => {
             const color = this.getColorFromColorPicker()
             this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, small: color})
-            parts[3].style.fill = color
             console.log(this.puzzleToy)
         }
 
@@ -276,9 +277,9 @@ export class SvgPentagonsHelper {
      * Creates the small division of the pentagon.
      * - The `centerX` and `centerY` refer to the center of the containing pentagon.
      */
-    private createMediumLeftQuarter(centerX: number, centerY: number, rotateDegrees?: number) {
+    private createMediumRightQuarter(centerX: number, centerY: number, rotateDegrees?: number) {
         const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
-        polygon.setAttribute('points', this.createPathForQuarterMediumLeft(centerX, centerY))
+        polygon.setAttribute('points', this.createPathForQuarterMediumRight(centerX, centerY))
         polygon.style.transform = 'rotate(' + rotateDegrees + 'deg)'
         polygon.style.transformOrigin = `${centerX}px ${centerY}px`
         polygon.style.fill = '#1100ff'
@@ -288,7 +289,7 @@ export class SvgPentagonsHelper {
         return polygon
     }
 
-    private createPathForQuarterMediumLeft(centerX: number, centerY: number) {
+    private createPathForQuarterMediumRight(centerX: number, centerY: number) {
         const centerOffsetX = SIDE_LENGTH / 2
         const centerOffsetY = tan(54) * centerOffsetX
         const points = [
@@ -311,9 +312,9 @@ export class SvgPentagonsHelper {
      * Creates the small division of the pentagon.
      * - The `centerX` and `centerY` refer to the center of the containing pentagon.
      */
-    private createMediumRightQuarter(centerX: number, centerY: number, rotateDegrees?: number) {
+    private createMediumLeftQuarter(centerX: number, centerY: number, rotateDegrees?: number) {
         const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
-        polygon.setAttribute('points', this.createPathForQuarterMediumRight(centerX, centerY))
+        polygon.setAttribute('points', this.createPathForQuarterMediumLeft(centerX, centerY))
         polygon.style.transform = 'rotate(' + rotateDegrees + 'deg)'
         polygon.style.transformOrigin = `${centerX}px ${centerY}px`
         polygon.style.fill = '#ffb100'
@@ -323,7 +324,7 @@ export class SvgPentagonsHelper {
         return polygon
     }
 
-    private createPathForQuarterMediumRight(centerX: number, centerY: number) {
+    private createPathForQuarterMediumLeft(centerX: number, centerY: number) {
         const centerOffsetX = SIDE_LENGTH / 2
         const centerOffsetY = tan(54) * centerOffsetX
         const points = [
