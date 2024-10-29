@@ -1,0 +1,39 @@
+body {
+    width: 100%;
+    margin: 0;
+}
+svg {
+    border: 1px solid black;
+    background: #ddd;
+    width: 100%;
+    max-height: 95vh;
+    box-sizing: border-box;
+}
+
+polygon {
+    cursor: pointer;
+    transition: 0.5s scale, 0.5s opacity;
+
+    &:hover {
+        scale: 1.2;
+        z-index: 2;
+        opacity: 0.9;
+    }
+}
+
+.color-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    & button {
+        width: 3em;
+        height: 3em;
+        background-color: currentColor;
+        border: 2px solid black;
+
+        &.active-color {
+            border-width: 4px;
+        }
+    }
+}
