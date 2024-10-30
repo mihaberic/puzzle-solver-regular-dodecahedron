@@ -3,7 +3,8 @@ Creating a tool that solves the puzzle I have. It is similar to a rubik's cube, 
 
 
 ## How to run app:
-- install typescript globally and run `tsc -watch`
+- `tsc -watch` if you have typescript installed globally
+- `npm install` and `npx tsc -watch` if above command does not work
 - open the index.html file
 
 
