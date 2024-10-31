@@ -1,4 +1,6 @@
-/** The puzzle comes with 12 different colors. I will put them into an enum. */
+/** The puzzle comes with 12 different colors. I will put them into an enum.
+ * TODO: maybe mark them with single letters "BbEGgRYGVWPp" so it can more easily be exported as fixture for tests. Less space required.
+*/
 enum Color {
     DarkBlue = '#2a3bab',
     LightBlue = '#00ffdd',
@@ -13,7 +15,7 @@ enum Color {
     Violet = '#621564',
 
     White = '#ffffff',
-    Pink = '#ffc0c0',
+    LightPink = '#ffc0c0',
     DarkPink = '#e97272',
 }
 
@@ -39,17 +41,8 @@ export class RegularDodecahedronPuzzle {
     private stateChangeCallbacks: Record<string, (face: PentagonFace) => void> = {}
 
     constructor() {
-        Object.entries(Color).forEach((entry, index) => {
-            this.stateOfPentagons.push({
-                faceId: 'ABCDEFGHIJKL'[index] as FaceName,
-                big: entry[1],
-                mediumLeft: entry[1],
-                mediumRight: entry[1],
-                small: entry[1],
-            })
-        })
         this.stateOfPentagons = currentStateOfMyActualPuzzleToy as any
-
+        //this.stateOfPentagons = this.getSolvedState()
         console.log('isStatePossible', this.isStatePossible())
     }
 
@@ -127,6 +120,25 @@ export class RegularDodecahedronPuzzle {
             .map((item) => Object.values(item))
             .flat()
             .every((item) => item)
+    }
+
+    public updateDisplayToSolvedState() {
+        this.stateOfPentagons = this.getSolvedState()
+        this.stateOfPentagons.forEach(face => this.stateChangeCallbacks[face.faceId]?.(face))
+    }
+
+    /** TODO: make sure it actually matches solved state of real toy.
+     * I see that the wrong colors border each other in some places. */
+    private getSolvedState() {
+        return Object.entries(Color).map((entry, index) => {
+            return{
+                faceId: 'ABCDEFGHIJKL'[index] as FaceName,
+                big: entry[1],
+                mediumLeft: entry[1],
+                mediumRight: entry[1],
+                small: entry[1],
+            }
+        })
     }
 }
 

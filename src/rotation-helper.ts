@@ -5,7 +5,7 @@ import { RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
  * - maybe to make it less likely to mistake these colors with the face colors, you could name this something else instead of colors?
  * - However, then how will you know which one it is on the SVG? (dotted, dashed, double, full maybe?)
  */
-enum Crease {
+export enum Crease {
     Red = 'R',
     Blue = 'B',
     Green = 'G',
@@ -51,25 +51,29 @@ export class RotationHelper {
             collateral: 'L I J',
         },
         [Crease.Blue]: {
-            quarterThatMoves: 'right',
             main: 'A C F G J L',
+            quarterThatMoves: 'right',
             collateral: 'K H I',
         },
         [Crease.Green]: {
-            quarterThatMoves: 'left',
             main: 'B D F H I L',
+            quarterThatMoves: 'left',
             collateral: 'A C K',
         },
         [Crease.Gray]: {
-            quarterThatMoves: 'right',
             main: 'C K I J E D',
+            quarterThatMoves: 'right',
             collateral: 'A L B',
         },
     }
-    private puzzleToy?: RegularDodecahedronPuzzle
+    private puzzleToy: RegularDodecahedronPuzzle
 
-    public init(parentNode: HTMLElement, puzzleToy: RegularDodecahedronPuzzle) {
+    constructor(puzzleToy: RegularDodecahedronPuzzle, parentNode?: HTMLElement) {
         this.puzzleToy = puzzleToy
+
+        if (!parentNode) {
+            return
+        }
 
         for (const crease of [Crease.Red, Crease.Blue, Crease.Green, Crease.Gray]) {
             const btn = document.createElement('button')
@@ -81,11 +85,20 @@ export class RotationHelper {
         }
     }
 
-    private rotateAlongCrease(crease: Crease, rotateClockwise = true) {
-        const puzzleToy = this.puzzleToy
-        if (!puzzleToy) {
-            throw new Error()
+    /**
+     * @param rotateClockwise default is true
+     * TODO: maybe this isn't the cleanest implementation, to have a `rotateClockwise` bool.
+     * This is more of an options argument thing or maybe have 2 separate methods?
+     */
+    public rotateAlongCrease(crease: Crease, rotateClockwise = true) {
+
+        if (!rotateClockwise) {
+            // The lazy mans counter clockwise solution. Maybe do this properly later, if performance matters.
+            this.rotateAlongCrease(crease)
+            this.rotateAlongCrease(crease)
+            return
         }
+        const puzzleToy = this.puzzleToy
 
         const breakingFaces = this.paths[crease].main
         const faces = breakingFaces.split(' ').map((faceName) => Object.assign({}, puzzleToy.getFace(faceName)))
