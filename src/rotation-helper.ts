@@ -80,6 +80,7 @@ export class RotationHelper {
             btn.textContent = crease.toString()
             btn.onclick = () => {
                 this.rotateAlongCrease(crease)
+                console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
             }
             parentNode.append(btn)
         }
@@ -91,13 +92,13 @@ export class RotationHelper {
      * This is more of an options argument thing or maybe have 2 separate methods?
      */
     public rotateAlongCrease(crease: Crease, rotateClockwise = true) {
-
         if (!rotateClockwise) {
             // The lazy mans counter clockwise solution. Maybe do this properly later, if performance matters.
             this.rotateAlongCrease(crease)
             this.rotateAlongCrease(crease)
             return
         }
+
         const puzzleToy = this.puzzleToy
 
         const breakingFaces = this.paths[crease].main

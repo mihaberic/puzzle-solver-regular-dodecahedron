@@ -1,6 +1,6 @@
 /** The puzzle comes with 12 different colors. I will put them into an enum.
  * TODO: maybe mark them with single letters "BbEGgRYGVWPp" so it can more easily be exported as fixture for tests. Less space required.
-*/
+ */
 enum Color {
     DarkBlue = '#2a3bab',
     LightBlue = '#00ffdd',
@@ -28,11 +28,10 @@ export interface PentagonFace {
     small: Color
 }
 
-type FaceName = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' 
+type FaceName = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L'
 
 /**
  * This holds the state of the toy.
- * It will (TODO) also allow specifying movements along axis.
  */
 export class RegularDodecahedronPuzzle {
     /** Pentagons are sorted from top to bottom, left to right. */
@@ -41,18 +40,13 @@ export class RegularDodecahedronPuzzle {
     private stateChangeCallbacks: Record<string, (face: PentagonFace) => void> = {}
 
     constructor() {
-        this.stateOfPentagons = currentStateOfMyActualPuzzleToy as any
+        this.stateOfPentagons = currentStateOfMyActualPuzzleToy.map((item) => ({ ...item })) as any
         //this.stateOfPentagons = this.getSolvedState()
         console.log('isStatePossible', this.isStatePossible())
     }
 
-    /**
-     * TODO:
-     * - instead of index, support more human understandable concept as well.
-     * - Use the newly defined A B C ... face naming
-     */
     public getFace(faceId: string) {
-        return this.stateOfPentagons.find(item => item.faceId == faceId)!
+        return this.stateOfPentagons.find((item) => item.faceId == faceId)!
     }
 
     /** Update one or more colors. */
@@ -61,7 +55,7 @@ export class RegularDodecahedronPuzzle {
             throw new Error('Id of face is required')
         }
 
-        const face = this.stateOfPentagons.find(item => item.faceId == options.faceId)!
+        const face = this.stateOfPentagons.find((item) => item.faceId == options.faceId)!
         Object.assign(face, options)
         this.stateChangeCallbacks[options.faceId]?.(face)
     }
@@ -122,16 +116,28 @@ export class RegularDodecahedronPuzzle {
             .every((item) => item)
     }
 
+    public getNumberOfSolvedFaces() {
+        return this.stateOfPentagons.filter(this.isFaceSolved).length
+    }
+
     public updateDisplayToSolvedState() {
         this.stateOfPentagons = this.getSolvedState()
-        this.stateOfPentagons.forEach(face => this.stateChangeCallbacks[face.faceId]?.(face))
+        this.stateOfPentagons.forEach((face) => this.stateChangeCallbacks[face.faceId]?.(face))
+    }
+
+    public resetStateToPredefinedState() {
+        this.stateOfPentagons = currentStateOfMyActualPuzzleToy.map((item) => ({ ...item })) as any
     }
 
     /** TODO: make sure it actually matches solved state of real toy.
-     * I see that the wrong colors border each other in some places. */
+     * I see that the wrong colors border each other in some places.
+     *
+     * **Correct pattern:**
+     * Gold, LightGreen, LightPink, DarkPink, Yellow, DarkBlue, Red, DarkGreen, Purple, Emerald, White, LightBlue
+     */
     private getSolvedState() {
         return Object.entries(Color).map((entry, index) => {
-            return{
+            return {
                 faceId: 'ABCDEFGHIJKL'[index] as FaceName,
                 big: entry[1],
                 mediumLeft: entry[1],
@@ -139,6 +145,10 @@ export class RegularDodecahedronPuzzle {
                 small: entry[1],
             }
         })
+    }
+
+    private isFaceSolved(face: PentagonFace) {
+        return face.small == face.big && face.small == face.mediumLeft && face.small == face.mediumRight
     }
 }
 
