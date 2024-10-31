@@ -15,7 +15,7 @@ enum Crease {
 const NUMBER_OF_COLLATERAL_FACES = 3
 
 /**
- * Class that enables moving the parts along all 4 creases.
+ * Class that enables rotating the parts along all 4 creases.
  *
  *
  * Classifying all the faces:
@@ -34,7 +34,7 @@ const NUMBER_OF_COLLATERAL_FACES = 3
  * ![test](../assets/state-of-my-actual-toy.svg)
  *
  */
-export class FirstMover {
+export class RotationHelper {
     /**
      * Rules for path:
      * - main path starts at top then left most face. then goes clockwise.

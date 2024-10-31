@@ -1,10 +1,10 @@
 import { ColorPicker } from './src/color-picker.js'
-import { FirstMover } from './src/first-mover.js'
+import { RotationHelper } from './src/rotation-helper.js'
 import { RegularDodecahedronPuzzle } from './src/regular-dodecahedron-puzzle.js'
 import { SvgPentagonsHelper } from './src/svg-pentagons-helper.js'
 
 const svgHelper = new SvgPentagonsHelper()
-const firstMover = new FirstMover()
+const firstMover = new RotationHelper()
 
 const puzzleToy = new RegularDodecahedronPuzzle()
 svgHelper.populateSvgWithPentagons(puzzleToy)
