@@ -30,3 +30,9 @@ export function* generateExhaustiveNumberPatterns(length: number, numberOfOption
 export function sleep(ms: number) {
     return new Promise((r) => setTimeout(r, ms))
 }
+
+/** Simply calls "JSON.parse(JSON.stringify(item))".
+ * - This avoids needing to import Lodash */
+export function deepClone<T>(item: T): T {
+    return JSON.parse(JSON.stringify(item))
+}

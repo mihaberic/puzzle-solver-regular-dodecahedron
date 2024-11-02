@@ -78,11 +78,21 @@ export class RotationHelper {
         for (const crease of [Crease.Red, Crease.Blue, Crease.Green, Crease.Gray]) {
             const btn = document.createElement('button')
             btn.textContent = crease.toString()
+            btn.title = 'Rotate clockwise on crease ' + crease
             btn.onclick = () => {
                 this.rotateAlongCrease(crease, true, { updateUi: true })
                 console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
             }
             parentNode.append(btn)
+
+            const btnCounterClockwise = document.createElement('button')
+            btnCounterClockwise.textContent = crease.toString() + ' false'
+            btnCounterClockwise.title = 'Rotate counter clockwise on crease ' + crease
+            btnCounterClockwise.onclick = () => {
+                this.rotateAlongCrease(crease, false, { updateUi: true })
+                console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
+            }
+            parentNode.append(btnCounterClockwise)
         }
     }
 
@@ -104,7 +114,7 @@ export class RotationHelper {
         const breakingFaces = this.paths[crease].main
         // Reason why you need deep copy is because while updating the face using updateColorValues, the original objects get modified and it breaks things.
         // TODO: Maybe refactor code to not modify existing but create new.
-        const faces = breakingFaces.split(' ').map((faceName) => ({...puzzleToy.getFace(faceName)}))
+        const faces = breakingFaces.split(' ').map((faceName) => ({ ...puzzleToy.getFace(faceName) }))
 
         faces.forEach((face, index) => {
             const even = index % 2 == 0
@@ -130,7 +140,7 @@ export class RotationHelper {
 
         // Collateral:
         const collateralFaces = this.paths[crease].collateral
-        const faces2 = collateralFaces.split(' ').map((faceName) => ({...puzzleToy.getFace(faceName)}))
+        const faces2 = collateralFaces.split(' ').map((faceName) => ({ ...puzzleToy.getFace(faceName) }))
         faces2.forEach((face, index) => {
             const targetFace = faces2[(index + 1) % NUMBER_OF_COLLATERAL_FACES]
             puzzleToy.updateColorValues({ ...face, faceId: targetFace.faceId }, options)

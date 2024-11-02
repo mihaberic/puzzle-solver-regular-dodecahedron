@@ -31,7 +31,7 @@ export interface PentagonFace {
 type FaceName = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L'
 
 /**
- * This holds the state of the toy.
+ * This holds the state of the puzzle toy.
  */
 export class RegularDodecahedronPuzzle {
     /** Pentagons are sorted from top to bottom, left to right. */
@@ -68,6 +68,14 @@ export class RegularDodecahedronPuzzle {
 
     public getFullState() {
         return this.stateOfPentagons
+    }
+
+    public setFullState(newState: PentagonFace[], options: { updateUi: boolean }) {
+        this.stateOfPentagons = newState.map((item) => ({ ...item }))
+
+        if (options.updateUi) {
+            this.callAllCallbacksWithCurrentState()
+        }
     }
 
     /**
@@ -128,7 +136,7 @@ export class RegularDodecahedronPuzzle {
 
     public updateDisplayToSolvedState() {
         this.stateOfPentagons = this.getSolvedState()
-        this.stateOfPentagons.forEach((face) => this.stateChangeCallbacks[face.faceId]?.(face))
+        this.callAllCallbacksWithCurrentState()
     }
 
     public resetStateToPredefinedState() {
@@ -155,6 +163,10 @@ export class RegularDodecahedronPuzzle {
 
     private isFaceSolved(face: PentagonFace) {
         return face.small == face.big && face.small == face.mediumLeft && face.small == face.mediumRight
+    }
+
+    private callAllCallbacksWithCurrentState() {
+        this.stateOfPentagons.forEach((face) => this.stateChangeCallbacks[face.faceId]?.(face))
     }
 }
 

@@ -20,6 +20,7 @@ Actual current state of my toy:
 
 ## Naming:
 - regular dodecahedron - the shape of this toy
+- puzzleToy - variable name to use for the actual toy
 - crease - the part where the toy moves. 4 of which this has
 - face - the flat surface 12 of which this shape has
   - collateral face - a face that stays the same but moves to new location after rotating a specific crease.
