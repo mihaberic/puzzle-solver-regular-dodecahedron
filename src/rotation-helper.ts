@@ -1,4 +1,4 @@
-import { RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
+import { PentagonFace, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
 
 /** The fore creases arbitrarily marked by the 4 colors.
  * TODO:
@@ -79,7 +79,7 @@ export class RotationHelper {
             const btn = document.createElement('button')
             btn.textContent = crease.toString()
             btn.onclick = () => {
-                this.rotateAlongCrease(crease)
+                this.rotateAlongCrease(crease, true, { updateUi: true })
                 console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
             }
             parentNode.append(btn)
@@ -91,44 +91,49 @@ export class RotationHelper {
      * TODO: maybe this isn't the cleanest implementation, to have a `rotateClockwise` bool.
      * This is more of an options argument thing or maybe have 2 separate methods?
      */
-    public rotateAlongCrease(crease: Crease, rotateClockwise = true) {
+    public rotateAlongCrease(crease: Crease, rotateClockwise = true, options?: { updateUi: boolean }) {
         if (!rotateClockwise) {
             // The lazy mans counter clockwise solution. Maybe do this properly later, if performance matters.
-            this.rotateAlongCrease(crease)
-            this.rotateAlongCrease(crease)
+            this.rotateAlongCrease(crease, true, options)
+            this.rotateAlongCrease(crease, true, options)
             return
         }
 
         const puzzleToy = this.puzzleToy
 
         const breakingFaces = this.paths[crease].main
-        const faces = breakingFaces.split(' ').map((faceName) => Object.assign({}, puzzleToy.getFace(faceName)))
+        // Reason why you need deep copy is because while updating the face using updateColorValues, the original objects get modified and it breaks things.
+        // TODO: Maybe refactor code to not modify existing but create new.
+        const faces = breakingFaces.split(' ').map((faceName) => ({...puzzleToy.getFace(faceName)}))
 
         faces.forEach((face, index) => {
             const even = index % 2 == 0
             const targetFace = faces[(index + 2) % 6]
             // A bit hard to explain in words. Probably good idea to just write a few tests for this
+            let updatedFace: Partial<PentagonFace>
             if (this.paths[crease].quarterThatMoves == 'left') {
                 if (even) {
-                    puzzleToy.updateColorValues({ ...targetFace, mediumLeft: face.mediumLeft, small: face.small })
+                    updatedFace = { faceId: targetFace.faceId, mediumLeft: face.mediumLeft, small: face.small }
                 } else {
-                    puzzleToy.updateColorValues({ ...targetFace, mediumLeft: face.mediumLeft, big: face.big })
+                    updatedFace = { faceId: targetFace.faceId, mediumLeft: face.mediumLeft, big: face.big }
                 }
             } else {
                 if (even) {
-                    puzzleToy.updateColorValues({ ...targetFace, mediumRight: face.mediumRight, small: face.small })
+                    updatedFace = { faceId: targetFace.faceId, mediumRight: face.mediumRight, small: face.small }
                 } else {
-                    puzzleToy.updateColorValues({ ...targetFace, mediumRight: face.mediumRight, big: face.big })
+                    updatedFace = { faceId: targetFace.faceId, mediumRight: face.mediumRight, big: face.big }
                 }
             }
+
+            puzzleToy.updateColorValues(updatedFace, options)
         })
 
         // Collateral:
         const collateralFaces = this.paths[crease].collateral
-        const faces2 = collateralFaces.split(' ').map((faceName) => Object.assign({}, puzzleToy.getFace(faceName)))
+        const faces2 = collateralFaces.split(' ').map((faceName) => ({...puzzleToy.getFace(faceName)}))
         faces2.forEach((face, index) => {
             const targetFace = faces2[(index + 1) % NUMBER_OF_COLLATERAL_FACES]
-            puzzleToy.updateColorValues({ ...face, faceId: targetFace.faceId })
+            puzzleToy.updateColorValues({ ...face, faceId: targetFace.faceId }, options)
         })
     }
 }

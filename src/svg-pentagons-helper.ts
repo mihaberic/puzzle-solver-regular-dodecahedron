@@ -69,7 +69,7 @@ export class SvgPentagonsHelper {
             ROTATION_STEP * 7,
             puzzleToy.getFace('F')
         )
-        
+
         // Second Flower
         this.createPentagon(
             ORIGIN_X + centerDistance * cos(54),
@@ -89,7 +89,7 @@ export class SvgPentagonsHelper {
             ROTATION_STEP * 9,
             puzzleToy.getFace('I')
         )
-        
+
         this.createPentagon(
             ORIGIN_X + centerDistance * (cos(54) * 2 - cos(18)),
             ORIGIN_Y + centerDistance * (sin(54) * 2 + 1 + sin(18)),
@@ -152,25 +152,25 @@ export class SvgPentagonsHelper {
 
         parts[0].onclick = () => {
             const color = this.getColorFromColorPicker()
-            this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, big: color})
+            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, big: color }, { updateUi: true })
             console.log(this.puzzleToy)
         }
 
         parts[1].onclick = () => {
             const color = this.getColorFromColorPicker()
-            this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, mediumLeft: color})
+            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, mediumLeft: color }, { updateUi: true })
             console.log(this.puzzleToy)
         }
 
         parts[2].onclick = () => {
             const color = this.getColorFromColorPicker()
-            this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, mediumRight: color})
+            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, mediumRight: color }, { updateUi: true })
             console.log(this.puzzleToy)
         }
 
         parts[3].onclick = () => {
             const color = this.getColorFromColorPicker()
-            this.puzzleToy?.updateColorValues({faceId: pentagonSide.faceId, small: color})
+            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, small: color }, { updateUi: true })
             console.log(this.puzzleToy)
         }
 

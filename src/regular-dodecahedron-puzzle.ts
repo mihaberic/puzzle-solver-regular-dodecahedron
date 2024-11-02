@@ -50,14 +50,21 @@ export class RegularDodecahedronPuzzle {
     }
 
     /** Update one or more colors. */
-    public updateColorValues(options: Partial<PentagonFace>) {
-        if (!options.faceId) {
+    public updateColorValues(faceUpdate: Partial<PentagonFace>, options?: { updateUi: boolean }) {
+        if (!faceUpdate.faceId) {
             throw new Error('Id of face is required')
         }
 
-        const face = this.stateOfPentagons.find((item) => item.faceId == options.faceId)!
-        Object.assign(face, options)
-        this.stateChangeCallbacks[options.faceId]?.(face)
+        const face = this.getFace(faceUpdate.faceId)
+
+        if (faceUpdate.big) face.big = faceUpdate.big
+        if (faceUpdate.mediumLeft) face.mediumLeft = faceUpdate.mediumLeft
+        if (faceUpdate.mediumRight) face.mediumRight = faceUpdate.mediumRight
+        if (faceUpdate.small) face.small = faceUpdate.small
+
+        if (options?.updateUi) {
+            this.stateChangeCallbacks[faceUpdate.faceId]?.(face)
+        }
     }
 
     public getFullState() {
