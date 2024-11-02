@@ -18,10 +18,10 @@ const COLORS = [
  * TODO: figure out if class with static methods is really the best approach. Maybe refactor to use as singleton.
  */
 export class ColorPicker {
-    private static currentColor = COLORS[0]
-    private static selectedColorButton: HTMLButtonElement
+    private currentColor = COLORS[0]
+    private selectedColorButton?: HTMLButtonElement
 
-    public static init() {
+    constructor(parentElement: HTMLElement) {
         const buttons = COLORS.map((colorHex) => {
             const btn = document.createElement('button')
             btn.style.color = colorHex
@@ -35,17 +35,15 @@ export class ColorPicker {
         })
 
         this.markOptionAsSelected(buttons[0])
-
-        // TODO: do this some other way maybe:
-        document.querySelector('.color-picker')?.append(...buttons)
+        parentElement.append(...buttons)
     }
 
     /** TODO: maybe return Color enum member, not hex? */
-    public static getCurrentColor() {
+    public getCurrentColor() {
         return this.currentColor // Change this to color
     }
 
-    private static markOptionAsSelected(btn: HTMLButtonElement) {
+    private markOptionAsSelected(btn: HTMLButtonElement) {
         this.selectedColorButton?.classList.remove('active-color')
         btn.classList.add('active-color')
         this.selectedColorButton = btn

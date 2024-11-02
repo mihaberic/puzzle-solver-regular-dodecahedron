@@ -1,5 +1,5 @@
 // TODO: figure out why I need to add `.js` for imports to work in browser
-import { ColorPicker } from './color-picker.js'
+import { ColorPicker } from './color-picker'
 import { PentagonFace, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
 
 const SIDE_LENGTH = 50
@@ -36,9 +36,10 @@ const ROTATION_STEP = 36
  * - the following points are specified clock wise.
  */
 export class SvgPentagonsHelper {
-    private puzzleToy?: RegularDodecahedronPuzzle
-    public populateSvgWithPentagons(puzzleToy: RegularDodecahedronPuzzle) {
-        this.puzzleToy = puzzleToy
+    constructor(private puzzleToy: RegularDodecahedronPuzzle, private colorPicker: ColorPicker) {}
+
+    public populateSvgWithPentagons() {
+        const puzzleToy = this.puzzleToy
 
         /** distance between neighboring centers */
         const centerDistance = (SIDE_LENGTH / 2) * tan(54) * 2
@@ -344,7 +345,7 @@ export class SvgPentagonsHelper {
     }
 
     private getColorFromColorPicker() {
-        const color = ColorPicker.getCurrentColor()
+        const color = this.colorPicker.getCurrentColor()
         return color as any
     }
 }

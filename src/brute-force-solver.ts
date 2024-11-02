@@ -14,15 +14,11 @@ const ROTATION_OPTIONS = [
 ]
 
 export class BruteForceSolver {
-    private puzzleToy: RegularDodecahedronPuzzle
-
-    constructor(puzzleToy: RegularDodecahedronPuzzle) {
-        this.puzzleToy = puzzleToy
+    constructor(private puzzleToy: RegularDodecahedronPuzzle, private rotationHelper: RotationHelper) {
         ;(window as any).bruteForceSolver = this // TODO: remove. Used only for debugging
     }
 
     public attemptToSolve(targetNumberOfSolvedItems: number, depthOfSearch: number, random = false) {
-        const rotationHelper = new RotationHelper(this.puzzleToy)
         const startTime = Date.now()
 
         let maxSolvedFaces = -1
@@ -39,7 +35,7 @@ export class BruteForceSolver {
 
             let i = 1
             for (const rotation of pattern) {
-                rotationHelper.rotateAlongCrease(rotation.crease, rotation.clockwiseTurn)
+                this.rotationHelper.rotateAlongCrease(rotation.crease, rotation.clockwiseTurn)
 
                 const numberOfSolvedFaces = this.puzzleToy.getNumberOfSolvedFaces()
                 if (numberOfSolvedFaces > maxSolvedFaces) {
@@ -64,7 +60,7 @@ export class BruteForceSolver {
 
         this.puzzleToy.resetStateToPredefinedState()
         bestPattern?.forEach((rotation) => {
-            rotationHelper.rotateAlongCrease(rotation.crease, rotation.clockwiseTurn, { updateUi: true })
+            this.rotationHelper.rotateAlongCrease(rotation.crease, rotation.clockwiseTurn, { updateUi: true })
         })
 
         console.log(this.puzzleToy.getFullState())

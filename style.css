@@ -21,7 +21,7 @@ polygon {
     }
 }
 
-.color-picker {
+#colorPicker {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;

@@ -42,7 +42,6 @@ export class RegularDodecahedronPuzzle {
     constructor() {
         this.stateOfPentagons = currentStateOfMyActualPuzzleToy.map((item) => ({ ...item })) as any
         //this.stateOfPentagons = this.getSolvedState()
-        console.log('isStatePossible', this.isStatePossible())
     }
 
     public getFace(faceId: string) {
@@ -72,7 +71,7 @@ export class RegularDodecahedronPuzzle {
     }
 
     /**
-     * To simplify implementation. Only one registered listener is supported per faceName.
+     * Only one registered listener is supported per faceName. This allows for simpler implementation.
      * - If same faceName is provided again, only the newest callback for it will be used.
      */
     public listenForColorChanges(faceName: string, callback: (face: PentagonFace) => void) {

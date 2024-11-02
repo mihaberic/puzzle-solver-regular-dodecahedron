@@ -1,10 +1,14 @@
+import { ColorPicker } from './color-picker'
+import { RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
 import { SvgPentagonsHelper } from './svg-pentagons-helper'
 
 describe('SvgPentagonsHelper', () => {
     let svgPentagonsHelper: SvgPentagonsHelper
 
     beforeAll(() => {
-        svgPentagonsHelper = new SvgPentagonsHelper()
+        const colorPicker: ColorPicker = { currentColor: '#ffffff' } as any
+        const puzzleToy = new RegularDodecahedronPuzzle()
+        svgPentagonsHelper = new SvgPentagonsHelper(puzzleToy, colorPicker)
     })
 
     // TODO: change this to actually check the pentagons you get back maybe
