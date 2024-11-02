@@ -1,5 +1,6 @@
 import { RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
 import { Crease, RotationHelper } from './rotation-helper.js'
+import { generateExhaustiveNumberPatterns } from './utils.js';
 
 const ROTATION_OPTIONS = [
     { crease: Crease.Red, clockwiseTurn: true },
@@ -75,7 +76,7 @@ export class BruteForceSolver {
      * A: There can be millions of possible pattern and so the list could get too large.
      */
     private *movementPatternGenerator(depth: number): Generator<{ crease: Crease; clockwiseTurn: boolean }[]> {
-        for (const patter of this.generatePattern(depth, 8)) {
+        for (const patter of generateExhaustiveNumberPatterns(depth, 8)) {
             yield patter.map((num) => ROTATION_OPTIONS[num])
         }
     }
@@ -83,27 +84,6 @@ export class BruteForceSolver {
     private *movementPatternGeneratorRandom(depth: number): Generator<{ crease: Crease; clockwiseTurn: boolean }[]> {
         for (let i = 0; i < 1000_000; i++) {
             yield Array.from({ length: depth }).map(() => ROTATION_OPTIONS[Math.floor(Math.random() * 8)])
-        }
-    }
-
-    /**
-     * TODO: seriously. Write a test for this.
-     */
-    private *generatePattern(depth: number, numberOfOptions: number): Generator<number[]> {
-        if (numberOfOptions < 2 || numberOfOptions > 36) {
-            // this is because of current implementation that uses the .toString
-            throw new Error('numberOfOptions must be between 2 and 36')
-        }
-
-        const numberOfAllOptions = numberOfOptions ** depth
-
-        for (let i = 0; i < numberOfAllOptions; i++) {
-            // This right here. This is what I call art (more art than science):
-            yield i
-                .toString(numberOfOptions)
-                .padStart(depth, '0')
-                .split('')
-                .map((item) => parseInt(item, numberOfOptions))
         }
     }
 }
