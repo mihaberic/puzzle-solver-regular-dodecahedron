@@ -75,25 +75,7 @@ export class RotationHelper {
             return
         }
 
-        for (const crease of [Crease.Red, Crease.Blue, Crease.Green, Crease.Gray]) {
-            const btn = document.createElement('button')
-            btn.textContent = crease.toString()
-            btn.title = 'Rotate clockwise on crease ' + crease
-            btn.onclick = () => {
-                this.rotateAlongCrease(crease, true, { updateUi: true })
-                console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
-            }
-            parentNode.append(btn)
-
-            const btnCounterClockwise = document.createElement('button')
-            btnCounterClockwise.textContent = crease.toString() + ' false'
-            btnCounterClockwise.title = 'Rotate counter clockwise on crease ' + crease
-            btnCounterClockwise.onclick = () => {
-                this.rotateAlongCrease(crease, false, { updateUi: true })
-                console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
-            }
-            parentNode.append(btnCounterClockwise)
-        }
+        this.createUi(parentNode, puzzleToy)
     }
 
     /**
@@ -145,5 +127,27 @@ export class RotationHelper {
             const targetFace = faces2[(index + 1) % NUMBER_OF_COLLATERAL_FACES]
             puzzleToy.updateColorValues({ ...face, faceId: targetFace.faceId }, options)
         })
+    }
+
+    private createUi(parentNode: HTMLElement, puzzleToy: RegularDodecahedronPuzzle) {
+        for (const crease of [Crease.Red, Crease.Blue, Crease.Green, Crease.Gray]) {
+            const btn = document.createElement('button')
+            btn.textContent = crease.toString()
+            btn.title = 'Rotate clockwise on crease ' + crease
+            btn.onclick = () => {
+                this.rotateAlongCrease(crease, true, { updateUi: true })
+                console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
+            }
+            parentNode.append(btn)
+
+            const btnCounterClockwise = document.createElement('button')
+            btnCounterClockwise.textContent = crease.toString() + ' false'
+            btnCounterClockwise.title = 'Rotate counter clockwise on crease ' + crease
+            btnCounterClockwise.onclick = () => {
+                this.rotateAlongCrease(crease, false, { updateUi: true })
+                console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
+            }
+            parentNode.append(btnCounterClockwise)
+        }
     }
 }

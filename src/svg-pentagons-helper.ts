@@ -21,7 +21,7 @@ const ROTATION_STEP = 36
  *                D
  *               /  \
  *            / small  \
- *         /   -      -  \
+ *         /   -      -   \
  *   E  /  mRight --  mLeft  \ C
  *      \      -      -      /
  *       \   -          -   /
@@ -134,16 +134,16 @@ export class SvgPentagonsHelper {
         this.svgElement.append(polygon)
 
         const parts: SVGPolygonElement[] = []
-        parts.push(this.createBigQuarter(centerX, centerY, rotateDegrees))
+        parts.push(this.createSmallQuarter(centerX, centerY, rotateDegrees))
         parts.push(this.createMediumLeftQuarter(centerX, centerY, rotateDegrees))
         parts.push(this.createMediumRightQuarter(centerX, centerY, rotateDegrees))
-        parts.push(this.createSmallQuarter(centerX, centerY, rotateDegrees))
+        parts.push(this.createBigQuarter(centerX, centerY, rotateDegrees))
 
         const setColorsOfQuarters = (face: PentagonFace) => {
-            parts[0].style.fill = face.big
+            parts[0].style.fill = face.small
             parts[1].style.fill = face.mediumLeft
             parts[2].style.fill = face.mediumRight
-            parts[3].style.fill = face.small
+            parts[3].style.fill = face.big
         }
 
         setColorsOfQuarters(pentagonSide)
@@ -153,15 +153,14 @@ export class SvgPentagonsHelper {
             const color = this.getColorFromColorPicker()
             this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, [prop]: color }, { updateUi: true })
 
-            console.log(prop)
-            console.log(this.puzzleToy)
+            console.log('Current state:', this.puzzleToy.getFullStateCompressed())
             console.log('isStatePossible', this.puzzleToy.isStatePossible())
         }
 
-        parts[0].onclick = () => updateColorOfQuarter('big')
+        parts[0].onclick = () => updateColorOfQuarter('small')
         parts[1].onclick = () => updateColorOfQuarter('mediumLeft')
         parts[2].onclick = () => updateColorOfQuarter('mediumRight')
-        parts[3].onclick = () => updateColorOfQuarter('small')
+        parts[3].onclick = () => updateColorOfQuarter('big')
 
         this.svgElement.append(...parts)
         parts.forEach((part) => {

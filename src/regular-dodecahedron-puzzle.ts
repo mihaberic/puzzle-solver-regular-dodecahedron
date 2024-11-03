@@ -1,31 +1,12 @@
-/** The puzzle comes with 12 different colors. I will put them into an enum.
- * TODO: maybe mark them with single letters "BbEGgRYGVWPp" so it can more easily be exported as fixture for tests. Less space required.
- */
-enum Color {
-    DarkBlue = '#2a3bab',
-    LightBlue = '#00ffdd',
-    Emerald = '#64e8b8',
-
-    LightGreen = '#00ff00',
-    DarkGreen = '#1c621c',
-    Red = '#ff0000',
-
-    Yellow = '#eff30f',
-    Gold = '#d8a20e',
-    Violet = '#621564',
-
-    White = '#ffffff',
-    LightPink = '#ffc0c0',
-    DarkPink = '#e97272',
-}
+import { codeToColorMap, Color, colorToCodeMap } from './colors'
 
 /** Contains color information for all 4 parts of one pentagon. */
 export interface PentagonFace {
     faceId: FaceName // TODO: fix this. Either use faceId or faceName, but not both.
-    big: Color
+    small: Color
     mediumLeft: Color
     mediumRight: Color
-    small: Color
+    big: Color
 }
 
 type FaceName = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L'
@@ -40,8 +21,8 @@ export class RegularDodecahedronPuzzle {
     private stateChangeCallbacks: Record<string, (face: PentagonFace) => void> = {}
 
     constructor() {
-        this.stateOfPentagons = currentStateOfMyActualPuzzleToy.map((item) => ({ ...item })) as any
-        //this.stateOfPentagons = this.getSolvedState()
+        this.stateOfPentagons = this.getPredefinedState()
+        // this.stateOfPentagons = this.getSolvedState()
     }
 
     public getFace(faceId: string) {
@@ -56,10 +37,10 @@ export class RegularDodecahedronPuzzle {
 
         const face = this.getFace(faceUpdate.faceId)
 
-        if (faceUpdate.big) face.big = faceUpdate.big
+        if (faceUpdate.small) face.small = faceUpdate.small
         if (faceUpdate.mediumLeft) face.mediumLeft = faceUpdate.mediumLeft
         if (faceUpdate.mediumRight) face.mediumRight = faceUpdate.mediumRight
-        if (faceUpdate.small) face.small = faceUpdate.small
+        if (faceUpdate.big) face.big = faceUpdate.big
 
         if (options?.updateUi) {
             this.stateChangeCallbacks[faceUpdate.faceId]?.(face)
@@ -68,6 +49,25 @@ export class RegularDodecahedronPuzzle {
 
     public getFullState() {
         return this.stateOfPentagons
+    }
+
+    public getFullStateCompressed() {
+        return this.stateOfPentagons
+            .map((item) => {
+                const encodedFace = [
+                    colorToCodeMap.get(item.small),
+                    colorToCodeMap.get(item.mediumLeft),
+                    colorToCodeMap.get(item.mediumRight),
+                    colorToCodeMap.get(item.big),
+                ]
+
+                if (encodedFace.some((item) => item == null)) {
+                    throw new Error('can not export because of face ' + item.faceId)
+                }
+
+                return encodedFace.join('')
+            })
+            .join('-')
     }
 
     public setFullState(newState: PentagonFace[], options: { updateUi: boolean }) {
@@ -91,19 +91,19 @@ export class RegularDodecahedronPuzzle {
      * TODO: make this more useful by making it log out the problematic part.
      */
     public isStatePossible() {
-        const allColors = Object.entries(Color).map((entry) => entry[1])
+        const allColors = Object.values(Color)
         const colors = new Map(
             allColors.map((color) => {
-                return [color, { big: false, mediumLeft: false, mediumRight: false, small: false }]
+                return [color, { small: false, mediumLeft: false, mediumRight: false, big: false }]
             })
         )
 
         for (const item of this.stateOfPentagons) {
-            if (colors.get(item.big)?.big) {
+            if (colors.get(item.small)?.small) {
                 return false
             }
 
-            colors.get(item.big)!.big = true
+            colors.get(item.small)!.small = true
 
             if (colors.get(item.mediumLeft)?.mediumLeft) {
                 return false
@@ -117,11 +117,11 @@ export class RegularDodecahedronPuzzle {
 
             colors.get(item.mediumRight)!.mediumRight = true
 
-            if (colors.get(item.small)?.small) {
+            if (colors.get(item.big)?.big) {
                 return false
             }
 
-            colors.get(item.small)!.small = true
+            colors.get(item.big)!.big = true
         }
 
         return Array.from(colors.values())
@@ -139,24 +139,52 @@ export class RegularDodecahedronPuzzle {
         this.callAllCallbacksWithCurrentState()
     }
 
-    public resetStateToPredefinedState() {
-        this.stateOfPentagons = currentStateOfMyActualPuzzleToy.map((item) => ({ ...item })) as any
-    }
+    private getPredefinedState(): PentagonFace[] {
+        return currentStateOfMyActualPuzzleToy.split('-').map((item, index) => {
+            const small = codeToColorMap.get(item[0])
+            const mediumLeft = codeToColorMap.get(item[1])
+            const mediumRight = codeToColorMap.get(item[2])
+            const big = codeToColorMap.get(item[3])
+            if (small == null || mediumLeft == null || mediumRight == null || big == null) {
+                throw new Error('')
+            }
 
-    /** TODO: make sure it actually matches solved state of real toy.
-     * I see that the wrong colors border each other in some places.
-     *
-     * **Correct pattern:**
-     * Gold, LightGreen, LightPink, DarkPink, Yellow, DarkBlue, Red, DarkGreen, Purple, Emerald, White, LightBlue
-     */
-    private getSolvedState() {
-        return Object.entries(Color).map((entry, index) => {
             return {
                 faceId: 'ABCDEFGHIJKL'[index] as FaceName,
-                big: entry[1],
-                mediumLeft: entry[1],
-                mediumRight: entry[1],
-                small: entry[1],
+                small,
+                mediumLeft,
+                mediumRight,
+                big,
+            }
+        })
+    }
+
+    /** Returns a state that matches the one you get when the real puzzle toy is solved. */
+    private getSolvedState(): PentagonFace[] {
+        const solvedState = [
+            Color.DarkYellow,
+            Color.LightGreen,
+            Color.LightPink,
+
+            Color.DarkPink,
+            Color.LightYellow,
+            Color.DarkBlue,
+
+            Color.Red,
+            Color.DarkGreen,
+            Color.Violet,
+
+            Color.Emerald,
+            Color.White,
+            Color.LightBlue,
+        ]
+        return solvedState.map((color, index) => {
+            return {
+                faceId: 'ABCDEFGHIJKL'[index] as FaceName,
+                big: color,
+                mediumLeft: color,
+                mediumRight: color,
+                small: color,
             }
         })
     }
@@ -173,89 +201,4 @@ export class RegularDodecahedronPuzzle {
 /**
  * I used my UI to put in the colors and then I copied the array from the console.
  */
-const currentStateOfMyActualPuzzleToy = [
-    {
-        faceId: 'A',
-        big: '#00ffdd',
-        mediumLeft: '#64e8b8',
-        mediumRight: '#00ff00',
-        small: '#ffffff',
-    },
-    {
-        faceId: 'B',
-        big: '#ff0000',
-        mediumLeft: '#eff30f',
-        mediumRight: '#1c621c',
-        small: '#d8a20e',
-    },
-    {
-        faceId: 'C',
-        big: '#64e8b8',
-        mediumLeft: '#ffc0c0',
-        mediumRight: '#eff30f',
-        small: '#621564',
-    },
-    {
-        faceId: 'D',
-        big: '#ffffff',
-        mediumLeft: '#e97272',
-        mediumRight: '#ff0000',
-        small: '#e97272',
-    },
-    {
-        faceId: 'E',
-        big: '#eff30f',
-        mediumLeft: '#1c621c',
-        mediumRight: '#2a3bab',
-        small: '#1c621c',
-    },
-    {
-        faceId: 'F',
-        big: '#2a3bab',
-        mediumLeft: '#2a3bab',
-        mediumRight: '#d8a20e',
-        small: '#eff30f',
-    },
-    {
-        faceId: 'G',
-        big: '#d8a20e',
-        mediumLeft: '#ffffff',
-        mediumRight: '#ffc0c0',
-        small: '#ff0000',
-    },
-    {
-        faceId: 'H',
-        big: '#00ff00',
-        mediumLeft: '#d8a20e',
-        mediumRight: '#ffffff',
-        small: '#ffc0c0',
-    },
-    {
-        faceId: 'I',
-        big: '#e97272',
-        mediumLeft: '#00ffdd',
-        mediumRight: '#621564',
-        small: '#2a3bab',
-    },
-    {
-        faceId: 'J',
-        big: '#621564',
-        mediumLeft: '#621564',
-        mediumRight: '#64e8b8',
-        small: '#00ff00',
-    },
-    {
-        faceId: 'K',
-        big: '#ffc0c0',
-        mediumLeft: '#00ff00',
-        mediumRight: '#e97272',
-        small: '#00ffdd',
-    },
-    {
-        faceId: 'L',
-        big: '#1c621c',
-        mediumLeft: '#ff0000',
-        mediumRight: '#00ffdd',
-        small: '#64e8b8',
-    },
-]
+const currentStateOfMyActualPuzzleToy = 'WEgb-YyGR-VpyE-PPRW-GGBy-yBYB-RWpY-pYWg-BbVP-gVEV-bgPp-ERbG'
