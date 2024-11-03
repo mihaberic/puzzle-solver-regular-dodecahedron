@@ -1,8 +1,8 @@
-import { RegularDodecahedronPuzzle } from './src/regular-dodecahedron-puzzle.js'
-import { ColorPicker } from './src/color-picker.js'
-import { RotationHelper } from './src/rotation-helper.js'
-import { SvgPentagonsHelper } from './src/svg-pentagons-helper.js'
-import { BruteForceSolver } from './src/brute-force-solver.js'
+import { RegularDodecahedronPuzzle } from './src/regular-dodecahedron-puzzle'
+import { ColorPicker } from './src/color-picker'
+import { RotationHelper } from './src/rotation-helper'
+import { SvgPentagonsHelper } from './src/svg-pentagons-helper'
+import { BruteForceSolver } from './src/brute-force-solver' 
 
 const puzzleToy = new RegularDodecahedronPuzzle()
 

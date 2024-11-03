@@ -1,6 +1,6 @@
 import { PentagonFace, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
-import { Crease, RotationHelper } from './rotation-helper.js'
-import { deepClone, generateExhaustiveNumberPatterns, sleep } from './utils.js'
+import { Crease, RotationHelper } from './rotation-helper'
+import { deepClone, generateExhaustiveNumberPatterns, sleep } from './utils'
 
 const ROTATION_OPTIONS = [
     { crease: Crease.Red, clockwiseTurn: true },
