@@ -14,9 +14,7 @@ const COLORS = [
     '#e97272',
 ]
 
-/**
- * TODO: figure out if class with static methods is really the best approach. Maybe refactor to use as singleton.
- */
+/** Created 12 color boxes for selecting color. */
 export class ColorPicker {
     private currentColor = COLORS[0]
     private selectedColorButton?: HTMLButtonElement
@@ -26,8 +24,7 @@ export class ColorPicker {
             const btn = document.createElement('button')
             btn.style.color = colorHex
             btn.onclick = () => {
-                console.log('Selected color: %c' + colorHex, 'color:' + colorHex)
-                this.currentColor = colorHex // TODO: do not use window to store state like this.
+                this.currentColor = colorHex
                 this.markOptionAsSelected(btn)
             }
 
@@ -49,5 +46,3 @@ export class ColorPicker {
         this.selectedColorButton = btn
     }
 }
-
-

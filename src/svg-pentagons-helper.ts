@@ -1,4 +1,3 @@
-// TODO: figure out why I need to add `.js` for imports to work in browser
 import { ColorPicker } from './color-picker'
 import { PentagonFace, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
 
@@ -18,17 +17,18 @@ const ROTATION_STEP = 36
  * Representation of a pentagon and its sides
  * - so reader can understand what edge A means or what side AB means.
  * ```markdown
- *         A               B
- *          --------------
- *         /              \
- *        /                \
- *       /                  \
- *      /                    \
- *   E  \                    / C
- *         \              /
- *            \        /
- *               \  /
+ *
  *                D
+ *               /  \
+ *            / small  \
+ *         /   -      -  \
+ *   E  /  mRight --  mLeft  \ C
+ *      \      -      -      /
+ *       \   -          -   /
+ *        \      big       /
+ *         \              /
+ *          --------------
+ *         A               B
  * ```
  *
  * Rules for defining points:
@@ -36,7 +36,11 @@ const ROTATION_STEP = 36
  * - the following points are specified clock wise.
  */
 export class SvgPentagonsHelper {
-    constructor(private puzzleToy: RegularDodecahedronPuzzle, private colorPicker: ColorPicker) {}
+    constructor(
+        private puzzleToy: RegularDodecahedronPuzzle,
+        private colorPicker: ColorPicker,
+        private svgElement: SVGSVGElement
+    ) {}
 
     public populateSvgWithPentagons() {
         const puzzleToy = this.puzzleToy
@@ -127,13 +131,7 @@ export class SvgPentagonsHelper {
         polygon.style.stroke = 'black'
         polygon.style.strokeWidth = '1px'
 
-        const svg = document.querySelector('svg')
-
-        if (!svg) {
-            throw new Error('No svg element found')
-        }
-
-        svg.append(polygon) // TODO: remove this and do the appending outside
+        this.svgElement.append(polygon)
 
         const parts: SVGPolygonElement[] = []
         parts.push(this.createBigQuarter(centerX, centerY, rotateDegrees))
@@ -141,45 +139,36 @@ export class SvgPentagonsHelper {
         parts.push(this.createMediumRightQuarter(centerX, centerY, rotateDegrees))
         parts.push(this.createSmallQuarter(centerX, centerY, rotateDegrees))
 
-        const setColorsOfParts = (face: PentagonFace) => {
+        const setColorsOfQuarters = (face: PentagonFace) => {
             parts[0].style.fill = face.big
             parts[1].style.fill = face.mediumLeft
             parts[2].style.fill = face.mediumRight
             parts[3].style.fill = face.small
         }
 
-        setColorsOfParts(pentagonSide)
-        this.puzzleToy?.listenForColorChanges(pentagonSide.faceId, setColorsOfParts)
+        setColorsOfQuarters(pentagonSide)
+        this.puzzleToy?.listenForColorChanges(pentagonSide.faceId, setColorsOfQuarters)
 
-        parts[0].onclick = () => {
+        const updateColorOfQuarter = (prop: keyof PentagonFace) => {
             const color = this.getColorFromColorPicker()
-            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, big: color }, { updateUi: true })
+            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, [prop]: color }, { updateUi: true })
+
+            console.log(prop)
             console.log(this.puzzleToy)
+            console.log('isStatePossible', this.puzzleToy.isStatePossible())
         }
 
-        parts[1].onclick = () => {
-            const color = this.getColorFromColorPicker()
-            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, mediumLeft: color }, { updateUi: true })
-            console.log(this.puzzleToy)
-        }
+        parts[0].onclick = () => updateColorOfQuarter('big')
+        parts[1].onclick = () => updateColorOfQuarter('mediumLeft')
+        parts[2].onclick = () => updateColorOfQuarter('mediumRight')
+        parts[3].onclick = () => updateColorOfQuarter('small')
 
-        parts[2].onclick = () => {
-            const color = this.getColorFromColorPicker()
-            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, mediumRight: color }, { updateUi: true })
-            console.log(this.puzzleToy)
-        }
-
-        parts[3].onclick = () => {
-            const color = this.getColorFromColorPicker()
-            this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, small: color }, { updateUi: true })
-            console.log(this.puzzleToy)
-        }
-
+        this.svgElement.append(...parts)
         parts.forEach((part) => {
             // This makes sure that when scale is increased on hovered element, that it is always displayed on top
-            part.onmouseenter = () => svg.append(part)
-            svg.append(part)
+            part.onmouseenter = () => this.svgElement.append(part)
         })
+
         return polygon
     }
 

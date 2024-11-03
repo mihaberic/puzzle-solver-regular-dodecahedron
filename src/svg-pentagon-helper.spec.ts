@@ -8,7 +8,8 @@ describe('SvgPentagonsHelper', () => {
     beforeAll(() => {
         const colorPicker: ColorPicker = { currentColor: '#ffffff' } as any
         const puzzleToy = new RegularDodecahedronPuzzle()
-        svgPentagonsHelper = new SvgPentagonsHelper(puzzleToy, colorPicker)
+        const svgElement = {} as any
+        svgPentagonsHelper = new SvgPentagonsHelper(puzzleToy, colorPicker, svgElement)
     })
 
     // TODO: change this to actually check the pentagons you get back maybe
