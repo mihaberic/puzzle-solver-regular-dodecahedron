@@ -2,8 +2,9 @@
     "prettier.printWidth": 120,
     "prettier.semi": false,
     "prettier.singleQuote": true,
+    "prettier.tabWidth": 4,
     "editor.formatOnSave": true,
     "files.associations": {
-        "*.svg": "html",
+        "*.svg": "html"
     }
 }

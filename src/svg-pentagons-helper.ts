@@ -146,16 +146,15 @@ export class SvgPentagonsHelper {
             parts[3].style.fill = face.big
         }
 
-        setColorsOfQuarters(pentagonSide)
         this.puzzleToy?.listenForColorChanges(pentagonSide.faceId, setColorsOfQuarters)
 
         const updateColorOfQuarter = (prop: keyof PentagonFace) => {
             const color = this.getColorFromColorPicker()
             this.puzzleToy?.updateColorValues({ faceId: pentagonSide.faceId, [prop]: color }, { updateUi: true })
 
-            console.log('Current state:', this.puzzleToy.getFullStateCompressed())
-            console.log('isStatePossible', this.puzzleToy.isStatePossible())
+            this.createUi()
         }
+        this.createUi()
 
         parts[0].onclick = () => updateColorOfQuarter('small')
         parts[1].onclick = () => updateColorOfQuarter('mediumLeft')
@@ -335,6 +334,17 @@ export class SvgPentagonsHelper {
     private getColorFromColorPicker() {
         const color = this.colorPicker.getCurrentColor()
         return color as any
+    }
+
+    /** TODO: really thinking I should have used some frontend framework. But for now it is ok I think. */
+    private createUi() {
+        const parentElement = document.getElementById('stateInfo')! // TODO: don't use getElementById inside here
+        const info = `<b>Current state:</b><br>
+            <code>${this.puzzleToy.getFullStateCompressed()}</code>
+            <br><br><b>State Possible:</b>
+            ${this.puzzleToy.isStatePossible()}`
+
+        parentElement.innerHTML = info
     }
 }
 

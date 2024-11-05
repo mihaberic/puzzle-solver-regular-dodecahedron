@@ -9,6 +9,7 @@ export class ColorPicker {
         const buttons = COLORS.map((colorHex) => {
             const btn = document.createElement('button')
             btn.style.color = colorHex
+            btn.classList.add('color-option')
             btn.onclick = () => {
                 this.markOptionAsSelected(btn, colorHex)
             }

@@ -84,6 +84,7 @@ export class RegularDodecahedronPuzzle {
      */
     public listenForColorChanges(faceName: string, callback: (face: PentagonFace) => void) {
         this.stateChangeCallbacks[faceName] = callback
+        callback(this.getFace(faceName))
     }
 
     /**

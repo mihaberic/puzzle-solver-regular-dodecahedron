@@ -6,7 +6,7 @@ svg {
     border: 1px solid black;
     background: #ddd;
     width: 100%;
-    max-height: 95vh;
+    max-height: calc(100vh - 20em);
     box-sizing: border-box;
 }
 
@@ -21,12 +21,16 @@ polygon {
     }
 }
 
+button {
+    font-size: 1em;
+}
+
 #colorPicker {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
 
-    & button {
+    & .color-option {
         width: 3em;
         height: 3em;
         background-color: currentColor;
@@ -34,6 +38,34 @@ polygon {
 
         &.active-color {
             border-width: 4px;
+        }
+    }
+}
+
+#rotationHelper {
+    display: flex;
+    gap: 4px;
+
+    & button {
+        height: 2em;
+        width: 4em;
+    }
+}
+
+#bruteForceSolver {
+
+    & .suggested-moves {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
+
+        & .item {
+            display: inline-block;
+            width: 3em;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid;
+            border-radius: 4px;
         }
     }
 }

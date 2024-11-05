@@ -130,10 +130,9 @@ export class RotationHelper {
     }
 
     private createUi(parentNode: HTMLElement, puzzleToy: RegularDodecahedronPuzzle) {
-        for (const crease of [Crease.Red, Crease.Blue, Crease.Green, Crease.Gray]) {
+        for (const crease of [Crease.Red, Crease.Gray, Crease.Green, Crease.Blue]) {
             const btn = document.createElement('button')
-            btn.textContent = crease.toString()
-            btn.title = 'Rotate clockwise on crease ' + crease
+            btn.innerHTML = crease.toString() + rotationCodeToArrowHtml.get(crease.toString() + '-' + 'true')
             btn.onclick = () => {
                 this.rotateAlongCrease(crease, true, { updateUi: true })
                 console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
@@ -141,8 +140,8 @@ export class RotationHelper {
             parentNode.append(btn)
 
             const btnCounterClockwise = document.createElement('button')
-            btnCounterClockwise.textContent = crease.toString() + ' false'
-            btnCounterClockwise.title = 'Rotate counter clockwise on crease ' + crease
+            btnCounterClockwise.innerHTML =
+                crease.toString() + rotationCodeToArrowHtml.get(crease.toString() + '-' + 'false')
             btnCounterClockwise.onclick = () => {
                 this.rotateAlongCrease(crease, false, { updateUi: true })
                 console.log('Num of faces:', puzzleToy.getNumberOfSolvedFaces())
@@ -151,3 +150,20 @@ export class RotationHelper {
         }
     }
 }
+
+/**
+ * To create the code: `const code = rotation.crease + '-' + rotation.clockwiseTurn`
+ * - TODO: do this with svg-s or some other way. Not like this
+ * don't use these html symbols. The arrows don't even match.
+ */
+export const rotationCodeToArrowHtml = new Map([
+    ['R-true', '&#8598;-'],
+    ['R-false', '&#8600;-'],
+    ['D-true', '&#8599;-'],
+    ['D-false', '&#8601;-'],
+
+    ['B-true', '-&#8601;'],
+    ['B-false', '-&#8599;'],
+    ['G-true', '-&#8600;'],
+    ['G-false', '-&#8598;'],
+])

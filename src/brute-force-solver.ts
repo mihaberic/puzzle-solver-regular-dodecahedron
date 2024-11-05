@@ -1,6 +1,7 @@
-import { PentagonFace, RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
-import { Crease, RotationHelper } from './rotation-helper'
-import { deepClone, generateExhaustiveNumberPatterns, sleep } from './utils'
+import { Color } from './colors'
+import { RegularDodecahedronPuzzle } from './regular-dodecahedron-puzzle'
+import { Crease, RotationHelper, rotationCodeToArrowHtml } from './rotation-helper'
+import { createButton, deepClone, generateExhaustiveNumberPatterns, sleep } from './utils'
 
 const ROTATION_OPTIONS = [
     { crease: Crease.Red, clockwiseTurn: true },
@@ -19,9 +20,11 @@ interface Rotation {
 }
 
 export class BruteForceSolver {
-    private personalBest?: PentagonFace[]
+    private bestPattern?: Rotation[]
     constructor(private puzzleToy: RegularDodecahedronPuzzle, private rotationHelper: RotationHelper) {
         ;(window as any).bruteForceSolver = this // TODO: remove. Used only for debugging
+
+        this.createUi()
     }
 
     public async attemptToSolve(targetNumberOfSolvedItems: number, depthOfSearch: number, random = false) {
@@ -33,8 +36,7 @@ export class BruteForceSolver {
         let maxSolvedFaces = -1
         let bestPattern: Rotation[] = []
         let stateAtTimeOfBestPattern = deepClone(this.puzzleToy.getFullState())
-        /** State from which we try to find the pattern to solve puzzle toy. */
-        const startState = this.personalBest ?? deepClone(this.puzzleToy.getFullState())
+        const startState = deepClone(this.puzzleToy.getFullState())
         let counter = 0
         const patternGenerator = random
             ? this.movementPatternGeneratorRandom(depthOfSearch)
@@ -74,11 +76,11 @@ export class BruteForceSolver {
         console.log('Max number of solved faces:', maxSolvedFaces)
         console.log('BestPattern:', this.compressPattern(bestPattern))
         console.log('Time spent:', ((Date.now() - startTime) / 1000).toFixed(3), 's')
+        this.bestPattern = bestPattern
 
         this.puzzleToy.setFullState(stateAtTimeOfBestPattern, { updateUi: true })
-        this.personalBest = stateAtTimeOfBestPattern
 
-        console.log(this.puzzleToy.getFullState())
+        console.log(this.puzzleToy.getFullStateCompressed())
     }
 
     /**
@@ -126,5 +128,54 @@ export class BruteForceSolver {
         }
 
         return compressedPattern
+    }
+
+    private createUi() {
+        const element = document.getElementById('bruteForceSolver')! // TODO: change this
+
+        const clearColorsButton = createButton('Clear colors', () => {
+            this.puzzleToy.setFullState(
+                'ABCDEFGHIJKL'.split('').map((id) => {
+                    return {
+                        faceId: id as any,
+                        small: Color.White,
+                        mediumLeft: Color.White,
+                        mediumRight: Color.White,
+                        big: Color.White,
+                    }
+                }),
+                { updateUi: true }
+            )
+        })
+        element.append(clearColorsButton)
+
+        /// "Try to solve" button:
+        // TODO: should be disabled if isStatePossible is false
+        const solveButton = createButton('Solve', async () => {
+            if (!this.puzzleToy.isStatePossible()) {
+                alert('Can not attempt solving. Color mismatch. Some colors seem to be incorrectly placed.')
+                return
+            }
+            solveButton.disabled = true
+            await this.attemptToSolve(7, 21, true)
+            solveButton.disabled = false
+            drawSolution()
+        })
+        element.append(solveButton)
+
+        const solution = document.createElement('div')
+        solution.classList.add('suggested-moves')
+        element.append(solution)
+
+        const drawSolution = () => {
+            solution.innerHTML = ''
+
+            this.bestPattern?.forEach((rotation) => {
+                const code = rotation.crease + '-' + rotation.clockwiseTurn
+
+                solution.innerHTML += `<div class="item">${rotationCodeToArrowHtml.get(code)}</div>`
+            })
+        }
+        drawSolution()
     }
 }

@@ -36,3 +36,10 @@ export function sleep(ms: number) {
 export function deepClone<T>(item: T): T {
     return JSON.parse(JSON.stringify(item))
 }
+
+export function createButton(text: string, callback: () => void) {
+    const solveButton = document.createElement('button')
+    solveButton.textContent = text
+    solveButton.onclick = callback
+    return solveButton
+}
