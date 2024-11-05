@@ -157,13 +157,13 @@ export class RotationHelper {
  * don't use these html symbols. The arrows don't even match.
  */
 export const rotationCodeToArrowHtml = new Map([
-    ['R-true', '&#8598;-'],
-    ['R-false', '&#8600;-'],
-    ['D-true', '&#8599;-'],
-    ['D-false', '&#8601;-'],
+    ['R-true', '&#8598; -   '],
+    ['R-false', '&#8600; -   '],
+    ['D-true', '&#8599; -   '],
+    ['D-false', '&#8601; -   '],
 
-    ['B-true', '-&#8601;'],
-    ['B-false', '-&#8599;'],
-    ['G-true', '-&#8600;'],
-    ['G-false', '-&#8598;'],
+    ['B-true', '   - &#8601;'],
+    ['B-false', '   - &#8599;'],
+    ['G-true', '   - &#8600;'],
+    ['G-false', '   - &#8598;'],
 ])

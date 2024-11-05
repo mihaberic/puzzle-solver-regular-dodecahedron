@@ -23,6 +23,7 @@ polygon {
 
 button {
     font-size: 1em;
+    cursor: pointer;
 }
 
 #colorPicker {
@@ -35,9 +36,14 @@ button {
         height: 3em;
         background-color: currentColor;
         border: 2px solid black;
+        transition: scale 0.5s;
 
         &.active-color {
             border-width: 4px;
+        }
+
+        &:hover {
+            scale: 1.1
         }
     }
 }
@@ -49,6 +55,9 @@ button {
     & button {
         height: 2em;
         width: 4em;
+        background: white;
+        color: black;
+        border: 2px solid;
     }
 }
 
@@ -66,6 +75,7 @@ button {
             text-align: center;
             border: 1px solid;
             border-radius: 4px;
+            white-space: pre;
         }
     }
 }
