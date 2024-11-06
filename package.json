@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "serve": "http-server -c-1"
+    "build": "tsc",
+    "serve": "http-server -c-1",
+    "watch": "tsc -watch"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",

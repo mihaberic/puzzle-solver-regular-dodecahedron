@@ -4,13 +4,16 @@ Creating a tool that solves the puzzle I have. It is similar to a rubik's cube, 
 
 ## How to serve app:
 
+- `npm install`
+- `npm run build` when code changes
 - `npm run serve`
 - then open http://127.0.0.1:8080/
 
 ## How to run app while developing:
 
-- `tsc -watch` if you have typescript installed globally
-- `npm install` and `npx tsc -watch` if above command does not work
+- `npm install`
+- `npm run watch` will listen for changes in ts files and rebuild
+- `npm run serve` so you can open http://127.0.0.1:8080/
 
 ## Images
 
