@@ -76,8 +76,8 @@ export class BruteForceSolver {
         console.log('Max number of solved faces:', maxSolvedFaces)
         console.log('BestPattern:', this.compressPattern(bestPattern))
         console.log('Time spent:', ((Date.now() - startTime) / 1000).toFixed(3), 's')
-        this.bestPattern = bestPattern
 
+        this.bestPattern = this.compressPattern(bestPattern)
         this.puzzleToy.setFullState(stateAtTimeOfBestPattern, { updateUi: true })
 
         console.log(this.puzzleToy.getFullStateCompressed())
