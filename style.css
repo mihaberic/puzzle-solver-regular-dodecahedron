@@ -79,3 +79,14 @@ button {
         }
     }
 }
+
+#stateInfo {
+    .current-state {
+        font-family: monospace;
+        width: 36em;
+        border: none;
+        background: #e1e1e1;
+        padding: 0.5em;
+        text-align: center;
+    }
+}

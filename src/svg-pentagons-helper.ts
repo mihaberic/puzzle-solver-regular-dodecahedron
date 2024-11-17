@@ -338,11 +338,15 @@ export class SvgPentagonsHelper {
     private createUi() {
         const parentElement = document.getElementById('stateInfo')! // TODO: don't use getElementById inside here
         const info = `<b>Current state:</b><br/>
-            <code>${this.puzzleToy.getFullStateCompressed()}</code>
+            <input class="current-state" value="${this.puzzleToy.getFullStateCompressed()}">
             <br><br/><b>State Possible:</b>
             ${this.puzzleToy.isStatePossible()}<br/><br/>`
 
         parentElement.innerHTML = info
+
+        parentElement.querySelector('input')!.oninput = (event: any) => {
+            this.puzzleToy.setFullStateCompressed(event.target.value)
+        }
     }
 }
 

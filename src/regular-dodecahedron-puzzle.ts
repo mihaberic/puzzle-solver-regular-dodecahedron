@@ -11,6 +11,8 @@ export interface PentagonFace {
 
 type FaceName = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L'
 
+const COMPRESSED_STATE_REGEX = /^([BbEGgRYyVWPp]{4}-){11}[BbEGgRYyVWPp]{4}$/
+
 /**
  * This holds the state of the puzzle toy.
  */
@@ -44,6 +46,7 @@ export class RegularDodecahedronPuzzle {
 
         if (options?.updateUi) {
             this.stateChangeCallbacks[faceUpdate.faceId]?.(face)
+            this.stateChangeCallbacks['']?.(face) // For the listener that wants all changes
         }
     }
 
@@ -81,10 +84,11 @@ export class RegularDodecahedronPuzzle {
     /**
      * Only one registered listener is supported per faceName. This allows for simpler implementation.
      * - If same faceName is provided again, only the newest callback for it will be used.
+     * @param faceName if null, then callback will be called for changes on all faces.
      */
-    public listenForColorChanges(faceName: string, callback: (face: PentagonFace) => void) {
-        this.stateChangeCallbacks[faceName] = callback
-        callback(this.getFace(faceName))
+    public listenForColorChanges(faceName: string | null, callback: (face: PentagonFace) => void) {
+        this.stateChangeCallbacks[faceName ?? ''] = callback
+        callback(this.getFace(faceName ?? 'A'))
     }
 
     /**
@@ -138,6 +142,11 @@ export class RegularDodecahedronPuzzle {
     public updateDisplayToSolvedState() {
         this.stateOfPentagons = this.getSolvedState()
         this.callAllCallbacksWithCurrentState()
+    }
+
+    public setFullStateCompressed(value: string) {
+        const newState = this.parseCompressedStateString(value)
+        this.setFullState(newState, { updateUi: true })
     }
 
     private getPredefinedState(): PentagonFace[] {
@@ -196,6 +205,29 @@ export class RegularDodecahedronPuzzle {
 
     private callAllCallbacksWithCurrentState() {
         this.stateOfPentagons.forEach((face) => this.stateChangeCallbacks[face.faceId]?.(face))
+    }
+
+    private parseCompressedStateString(value: string) {
+        if (!COMPRESSED_STATE_REGEX.test(value)) {
+            throw new Error('invalid state value')
+        }
+        return value.split('-').map((item, index) => {
+            const small = codeToColorMap.get(item[0])
+            const mediumLeft = codeToColorMap.get(item[1])
+            const mediumRight = codeToColorMap.get(item[2])
+            const big = codeToColorMap.get(item[3])
+            if (small == null || mediumLeft == null || mediumRight == null || big == null) {
+                throw new Error('')
+            }
+
+            return {
+                faceId: 'ABCDEFGHIJKL'[index] as FaceName,
+                small,
+                mediumLeft,
+                mediumRight,
+                big,
+            }
+        })
     }
 }
 

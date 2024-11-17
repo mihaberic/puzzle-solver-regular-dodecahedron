@@ -19,28 +19,40 @@ interface Rotation {
     clockwiseTurn: boolean
 }
 
+interface BruteForceOptions {
+    targetNumberOfSolvedFaces: number
+    maxNumberOfMoves: number
+    randomSearch: boolean
+    compressedStartState?: string
+}
+
 export class BruteForceSolver {
     private bestPattern?: Rotation[]
+    private savedState?: string
     constructor(private puzzleToy: RegularDodecahedronPuzzle, private rotationHelper: RotationHelper) {
         ;(window as any).bruteForceSolver = this // TODO: remove. Used only for debugging
 
         this.createUi()
     }
 
-    public async attemptToSolve(targetNumberOfSolvedItems: number, depthOfSearch: number, random = false) {
-        if (!random && depthOfSearch > 7) {
+    public async attemptToSolve(options: BruteForceOptions) {
+        if (!options.randomSearch && options.maxNumberOfMoves > 7) {
             throw new Error('Exhaustive search (not random) is limited to depth of 7 because of computational expense.')
         }
         const startTime = Date.now()
+
+        if (options.compressedStartState) {
+            this.puzzleToy.setFullStateCompressed(options.compressedStartState)
+        }
 
         let maxSolvedFaces = -1
         let bestPattern: Rotation[] = []
         let stateAtTimeOfBestPattern = deepClone(this.puzzleToy.getFullState())
         const startState = deepClone(this.puzzleToy.getFullState())
         let counter = 0
-        const patternGenerator = random
-            ? this.movementPatternGeneratorRandom(depthOfSearch)
-            : this.movementPatternGenerator(depthOfSearch)
+        const patternGenerator = options.randomSearch
+            ? this.movementPatternGeneratorRandom(options.maxNumberOfMoves)
+            : this.movementPatternGenerator(options.maxNumberOfMoves)
 
         // I don't usually use labeled loops, but when I do.
         patternsLoop: for (const pattern of patternGenerator) {
@@ -54,15 +66,20 @@ export class BruteForceSolver {
                 const numberOfSolvedFaces = this.puzzleToy.getNumberOfSolvedFaces()
                 if (numberOfSolvedFaces > maxSolvedFaces) {
                     maxSolvedFaces = numberOfSolvedFaces
-                    bestPattern = pattern.slice(0, i)
+                    bestPattern = this.compressPattern(pattern.slice(0, i))
                     stateAtTimeOfBestPattern = deepClone(this.puzzleToy.getFullState())
 
-                    console.log('New best:', this.puzzleToy.getNumberOfSolvedFaces())
+                    console.log(
+                        'New best:',
+                        this.puzzleToy.getNumberOfSolvedFaces(),
+                        this.puzzleToy.getFullStateCompressed(),
+                        bestPattern
+                    )
                     this.puzzleToy.setFullState(stateAtTimeOfBestPattern, { updateUi: true })
                     await sleep(0)
                 }
 
-                if (numberOfSolvedFaces >= targetNumberOfSolvedItems) {
+                if (numberOfSolvedFaces >= options.targetNumberOfSolvedFaces) {
                     console.log('------ getNumberOfSolvedFaces', this.puzzleToy.getNumberOfSolvedFaces())
                     console.log(pattern)
                     break patternsLoop
@@ -72,12 +89,12 @@ export class BruteForceSolver {
             }
         }
 
-        console.log('Number of attempts:', counter, '/', 8 ** depthOfSearch) // TODO: remove console log
+        console.log('Number of attempts:', counter, '/', 8 ** options.maxNumberOfMoves) // TODO: remove console log
         console.log('Max number of solved faces:', maxSolvedFaces)
-        console.log('BestPattern:', this.compressPattern(bestPattern))
+        console.log('BestPattern:', bestPattern)
         console.log('Time spent:', ((Date.now() - startTime) / 1000).toFixed(3), 's')
 
-        this.bestPattern = this.compressPattern(bestPattern)
+        this.bestPattern = bestPattern
         this.puzzleToy.setFullState(stateAtTimeOfBestPattern, { updateUi: true })
 
         console.log(this.puzzleToy.getFullStateCompressed())
@@ -157,9 +174,26 @@ export class BruteForceSolver {
                 return
             }
             solveButton.disabled = true
-            await this.attemptToSolve(7, 21, true)
+
+            if (!this.savedState) {
+                this.savedState = this.puzzleToy.getFullStateCompressed()
+            }
+
+            await this.attemptToSolve({
+                targetNumberOfSolvedFaces: 7,
+                maxNumberOfMoves: 20,
+                randomSearch: true,
+                compressedStartState: this.savedState,
+            })
+
             solveButton.disabled = false
             drawSolution()
+
+            solveButton.textContent = 'Try again'
+        })
+
+        this.puzzleToy.listenForColorChanges(null, () => {
+            solveButton.disabled = !this.puzzleToy.isStatePossible()
         })
         element.append(solveButton)
 
