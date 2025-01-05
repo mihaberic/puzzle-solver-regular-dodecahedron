@@ -1,4 +1,4 @@
-import { Color, COLORS } from './colors'
+import { Color, COLORS, colorToCodeMap } from './colors'
 
 /** Created 12 color boxes for selecting color. */
 export class ColorPicker {
@@ -8,7 +8,8 @@ export class ColorPicker {
     constructor(parentElement: HTMLElement) {
         const buttons = COLORS.map((colorHex) => {
             const btn = document.createElement('button')
-            btn.style.color = colorHex
+            btn.style.backgroundColor = colorHex
+            btn.textContent = colorToCodeMap.get(colorHex)!
             btn.classList.add('color-option')
             btn.onclick = () => {
                 this.markOptionAsSelected(btn, colorHex)

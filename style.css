@@ -34,7 +34,6 @@ button {
     & .color-option {
         width: 3em;
         height: 3em;
-        background-color: currentColor;
         border: 2px solid black;
         transition: scale 0.5s;
 
